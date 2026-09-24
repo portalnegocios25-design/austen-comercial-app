@@ -1401,19 +1401,17 @@ export default function Home() {
                           <small>Estoque</small>
                           <input
                             className="stockInput"
-                            type="text"
-                            inputMode="decimal"
-                            defaultValue={String(p.estoque)}
+                            type="number"
+                            inputMode="numeric"
+                            min="0"
+                            step="1"
+                            defaultValue={p.estoque}
                             autoComplete="off"
-                            onFocus={(e) => e.currentTarget.select()}
-                            onClick={(e) => e.stopPropagation()}
-                            onPointerDown={(e) => e.stopPropagation()}
-                            onChange={(e) => {
-                              const valor = e.currentTarget.value;
-                              setContagem((anterior) => ({
-                                ...anterior,
-                                [p.nome]: valor,
-                              }));
+                            onFocus={(e) => {
+                              e.currentTarget.value = "";
+                            }}
+                            onInput={(e) => {
+                              contagem[p.nome] = e.currentTarget.value;
                             }}
                           />
                         </div>
