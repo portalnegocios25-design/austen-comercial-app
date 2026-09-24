@@ -975,6 +975,7 @@ export default function Home() {
     ]);
     setContagem({});
     setVisita(false);
+    setAba("Pedidos");
   };
   const campanhaElegivel = (c) => {
     const hoje = new Date().toISOString().slice(0, 10);
@@ -1168,6 +1169,8 @@ export default function Home() {
                     setCliente(c);
                     setClienteAbertoId(c.id);
                     setPedido({});
+                    setContagem({});
+                    setVisita(true);
                   }}
                 >
                   <div className="customerAvatar">
