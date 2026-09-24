@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 const catalogo = [
   {
     nome: "Personalidade Total Care Super P 70",
@@ -790,6 +790,8 @@ const calc = (p) => {
   };
 };
 export default function Home() {
+  const pedidoDigitadoRef = useRef({});
+  const sugestaoDigitadaRef = useRef({});
   const [aba, setAba] = useState("Visão geral"),
     [baseClientes, setBaseClientes] = useState(clientes),
     [cliente, setCliente] = useState(clientes[0]),
@@ -1716,34 +1718,37 @@ export default function Home() {
             <label>
               <span>Vendedor</span>
               <input
-                type="number"
+                type="tel"
                 inputMode="numeric"
-                min="0"
-                step="1"
+                pattern="[0-9]*"
                 defaultValue={sugVendedor[p.nome] ?? x.sug}
                 autoComplete="off"
-                onFocus={(e) => {
-                  e.currentTarget.value = "";
+                onFocus={(e) => e.currentTarget.select()}
+                onChange={(e) => {
+                  sugestaoDigitadaRef.current[p.nome] = e.currentTarget.value;
                 }}
-                onInput={(e) => {
-                  sugVendedor[p.nome] = e.currentTarget.value;
+                onBlur={(e) => {
+                  const valor = e.currentTarget.value;
+                  setSugVendedor((anterior) => ({ ...anterior, [p.nome]: valor }));
                 }
               />
             </label>
             <label>
               <span>Pedido</span>
               <input
-                type="number"
+                type="tel"
                 inputMode="numeric"
-                min="0"
-                step="1"
+                pattern="[0-9]*"
                 defaultValue={pedido[p.nome] ?? ""}
                 placeholder={sugVendedor[p.nome] ?? x.sug}
                 autoComplete="off"
-                onInput={(e) => {
-                  pedido[p.nome] = e.currentTarget.value;
+                onChange={(e) => {
+                  pedidoDigitadoRef.current[p.nome] = e.currentTarget.value;
                 }}
-                onBlur={() => setPedido({ ...pedido })}
+                onBlur={(e) => {
+                  const valor = e.currentTarget.value;
+                  setPedido((anterior) => ({ ...anterior, [p.nome]: valor }));
+                }
               />
             </label>
           </div>
