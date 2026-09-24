@@ -895,6 +895,7 @@ export default function Home() {
   };
   const sugestao = cliente.produtos.reduce((s, p) => s + calc(p).sug, 0);
   const qtdPedido = Object.values(pedido).reduce((s, n) => s + (+n || 0), 0);
+  const totalPedidoAtual = () => Object.values(pedido).reduce((s, n) => s + (+n || 0), 0);
   const abrirProduto = (prod) => {
     const info = produtosGestao.find((x) => x.nome === prod.nome) || prod;
     setProdutoApresentacao({
@@ -994,7 +995,8 @@ export default function Home() {
     return periodo && publico;
   };
   const confirmarPedido = () => {
-    if (!qtdPedido) return;
+    const totalAtual = totalPedidoAtual();
+    if (!totalAtual) return;
     const itens = cliente.produtos
       .map((p) => ({
         nome: p.nome,
@@ -1029,7 +1031,7 @@ export default function Home() {
         cliente: cliente.nome,
         data: new Date().toLocaleDateString("pt-BR"),
         itens,
-        total: qtdPedido,
+        total: totalAtual,
         status: "Preparado",
         campanha: campanhaAuto?.nome || null,
         beneficio: campanhaAuto?.brinde || null,
@@ -1750,6 +1752,11 @@ export default function Home() {
                 }}
                 onInput={(e) => {
                   pedido[p.nome] = e.currentTarget.value;
+                  const total = Object.values(pedido).reduce((s, n) => s + (+n || 0), 0);
+                  const totalEl = document.querySelector("[data-order-total]");
+                  const btnEl = document.querySelector("[data-order-submit]");
+                  if (totalEl) totalEl.textContent = total + " unidades";
+                  if (btnEl) btnEl.disabled = total <= 0;
                 }}
               />
             </label>
@@ -1777,8 +1784,8 @@ export default function Home() {
       </div>
       <div className="orderTotal">
         <span>Total confirmado</span>
-        <b>{qtdPedido} unidades</b>
-        <button disabled={!qtdPedido} onClick={confirmarPedido}>
+        <b data-order-total>{qtdPedido} unidades</b>
+        <button data-order-submit disabled={!qtdPedido} onClick={confirmarPedido}>
           Preparar pedido
         </button>
       </div>
