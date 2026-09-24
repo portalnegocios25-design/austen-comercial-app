@@ -4016,3 +4016,95 @@ nav button.sel {
     display: none;
   }
 }
+
+
+/* Mobile layout correction — 24/09/2026 */
+html, body { max-width: 100%; overflow-x: hidden; }
+header { box-sizing: border-box; }
+.austenBrandText h1 { line-height: 1.05; overflow-wrap: normal; }
+@media (max-width: 700px) {
+  body { overflow-x: hidden; }
+  header {
+    width: 100%;
+    max-width: 100%;
+    padding: 14px 14px 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  header .austenBrand {
+    width: 100%;
+    min-width: 0;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .austenLogo {
+    width: 58px;
+    height: 44px;
+    max-width: 58px;
+    object-fit: contain;
+    border-radius: 8px;
+    flex: 0 0 58px;
+    background: transparent;
+  }
+  .austenBrandText { min-width: 0; flex: 1; }
+  .austenBrandText small {
+    display: block;
+    font-size: 8px;
+    letter-spacing: .08em;
+    white-space: nowrap;
+  }
+  .austenBrandText h1 {
+    margin: 2px 0 0;
+    font-size: 22px;
+    line-height: 1.08;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .austenBrandText p { display: none; }
+  .profileSwitch {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .profileSwitch button {
+    min-width: 0;
+    width: 100%;
+    padding: 10px 4px;
+    font-size: 11px;
+    line-height: 1;
+    border-radius: 9px;
+    white-space: nowrap;
+  }
+  main, section, .dashboard, .manager {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .dashboard, .manager, section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .kpis, .managerKpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .kpis article, .managerKpis article {
+    min-width: 0;
+    padding: 12px;
+  }
+  .card, .panel, article { max-width: 100%; box-sizing: border-box; }
+}
+@media (max-width: 380px) {
+  .austenLogo { width: 50px; height: 40px; flex-basis: 50px; }
+  .austenBrandText h1 { font-size: 19px; }
+  .profileSwitch button { font-size: 10px; padding: 9px 2px; }
+}
