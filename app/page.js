@@ -792,6 +792,8 @@ const calc = (p) => {
 export default function Home() {
   const pedidoDigitadoRef = useRef({});
   const sugestaoDigitadaRef = useRef({});
+  const [pedidoEmEdicao, setPedidoEmEdicao] = useState({});
+  const [sugestaoEmEdicao, setSugestaoEmEdicao] = useState({});
   const [aba, setAba] = useState("Visão geral"),
     [baseClientes, setBaseClientes] = useState(clientes),
     [cliente, setCliente] = useState(clientes[0]),
@@ -1644,7 +1646,8 @@ export default function Home() {
       </section>
     );
   };
-  const Pedidos = () => (
+  const Pedidos = () => {
+    return (
     <section className="panel order">
       <div className="title">
         <div>
@@ -1718,14 +1721,15 @@ export default function Home() {
             <label>
               <span>Vendedor</span>
               <input
-                type="tel"
+                type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                defaultValue={sugVendedor[p.nome] ?? x.sug}
+                value={sugestaoEmEdicao[p.nome] ?? String(sugVendedor[p.nome] ?? x.sug)}
                 autoComplete="off"
                 onFocus={(e) => e.currentTarget.select()}
                 onChange={(e) => {
-                  sugestaoDigitadaRef.current[p.nome] = e.currentTarget.value;
+                  const valor = e.currentTarget.value.replace(/\\D/g, "");
+                  setSugestaoEmEdicao((anterior) => ({ ...anterior, [p.nome]: valor }));
                 }}
                 onBlur={(e) => {
                   const valor = e.currentTarget.value;
@@ -1736,14 +1740,15 @@ export default function Home() {
             <label>
               <span>Pedido</span>
               <input
-                type="tel"
+                type="text"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                defaultValue={pedido[p.nome] ?? ""}
+                value={pedidoEmEdicao[p.nome] ?? String(pedido[p.nome] ?? "")}
                 placeholder={sugVendedor[p.nome] ?? x.sug}
                 autoComplete="off"
                 onChange={(e) => {
-                  pedidoDigitadoRef.current[p.nome] = e.currentTarget.value;
+                  const valor = e.currentTarget.value.replace(/\\D/g, "");
+                  setPedidoEmEdicao((anterior) => ({ ...anterior, [p.nome]: valor }));
                 }}
                 onBlur={(e) => {
                   const valor = e.currentTarget.value;
@@ -1809,7 +1814,8 @@ export default function Home() {
         </div>
       )}
     </section>
-  );
+    );
+  };
   const Gestor = () => {
     const [vendSel, setVendSel] = useState(baseVendedores[0] || null);
     const [territorio, setTerritorio] = useState("Todos");
