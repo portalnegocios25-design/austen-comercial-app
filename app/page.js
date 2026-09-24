@@ -1717,10 +1717,16 @@ export default function Home() {
               <span>Vendedor</span>
               <input
                 type="number"
+                inputMode="numeric"
                 min="0"
-                value={sugVendedor[p.nome] ?? x.sug}
-                onChange={(e) =>
-                  setSugVendedor({ ...sugVendedor, [p.nome]: e.target.value })
+                step="1"
+                defaultValue={sugVendedor[p.nome] ?? x.sug}
+                autoComplete="off"
+                onFocus={(e) => {
+                  e.currentTarget.value = "";
+                }}
+                onInput={(e) => {
+                  sugVendedor[p.nome] = e.currentTarget.value;
                 }
               />
             </label>
@@ -1728,12 +1734,16 @@ export default function Home() {
               <span>Pedido</span>
               <input
                 type="number"
+                inputMode="numeric"
                 min="0"
-                value={pedido[p.nome] ?? ""}
+                step="1"
+                defaultValue={pedido[p.nome] ?? ""}
                 placeholder={sugVendedor[p.nome] ?? x.sug}
-                onChange={(e) =>
-                  setPedido({ ...pedido, [p.nome]: e.target.value })
-                }
+                autoComplete="off"
+                onInput={(e) => {
+                  pedido[p.nome] = e.currentTarget.value;
+                }}
+                onBlur={() => setPedido({ ...pedido })}
               />
             </label>
           </div>
