@@ -1721,39 +1721,36 @@ export default function Home() {
             <label>
               <span>Vendedor</span>
               <input
-                type="text"
+                type="number"
                 inputMode="numeric"
-                pattern="[0-9]*"
-                value={sugestaoEmEdicao[p.nome] ?? String(sugVendedor[p.nome] ?? x.sug)}
+                min="0"
+                step="1"
+                defaultValue={sugVendedor[p.nome] ?? x.sug}
                 autoComplete="off"
-                onFocus={(e) => e.currentTarget.select()}
-                onChange={(e) => {
-                  const valor = e.currentTarget.value.replace(/\\D/g, "");
-                  setSugestaoEmEdicao((anterior) => ({ ...anterior, [p.nome]: valor }));
+                onFocus={(e) => {
+                  e.currentTarget.value = "";
                 }}
-                onBlur={(e) => {
-                  const valor = e.currentTarget.value;
-                  setSugVendedor((anterior) => ({ ...anterior, [p.nome]: valor }));
-                }
+                onInput={(e) => {
+                  sugVendedor[p.nome] = e.currentTarget.value;
+                }}
               />
             </label>
             <label>
               <span>Pedido</span>
               <input
-                type="text"
+                type="number"
                 inputMode="numeric"
-                pattern="[0-9]*"
-                value={pedidoEmEdicao[p.nome] ?? String(pedido[p.nome] ?? "")}
+                min="0"
+                step="1"
+                defaultValue={pedido[p.nome] ?? ""}
                 placeholder={sugVendedor[p.nome] ?? x.sug}
                 autoComplete="off"
-                onChange={(e) => {
-                  const valor = e.currentTarget.value.replace(/\\D/g, "");
-                  setPedidoEmEdicao((anterior) => ({ ...anterior, [p.nome]: valor }));
+                onFocus={(e) => {
+                  e.currentTarget.value = "";
                 }}
-                onBlur={(e) => {
-                  const valor = e.currentTarget.value;
-                  setPedido((anterior) => ({ ...anterior, [p.nome]: valor }));
-                }
+                onInput={(e) => {
+                  pedido[p.nome] = e.currentTarget.value;
+                }}
               />
             </label>
           </div>
