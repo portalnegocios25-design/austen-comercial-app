@@ -1403,16 +1403,17 @@ export default function Home() {
                             className="stockInput"
                             type="text"
                             inputMode="decimal"
-                            value={contagem[p.nome] ?? String(p.estoque)}
-                            onFocus={(e) => e.target.select()}
+                            defaultValue={String(p.estoque)}
+                            autoComplete="off"
+                            onFocus={(e) => e.currentTarget.select()}
+                            onClick={(e) => e.stopPropagation()}
+                            onPointerDown={(e) => e.stopPropagation()}
                             onChange={(e) => {
-                              const valor = e.target.value.replace(",", ".");
-                              if (valor === "" || /^\\d*(?:\\.\\d*)?$/.test(valor)) {
-                                setContagem((anterior) => ({
-                                  ...anterior,
-                                  [p.nome]: valor,
-                                }));
-                              }
+                              const valor = e.currentTarget.value;
+                              setContagem((anterior) => ({
+                                ...anterior,
+                                [p.nome]: valor,
+                              }));
                             }}
                           />
                         </div>
