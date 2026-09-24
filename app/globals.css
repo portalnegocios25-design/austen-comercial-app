@@ -3982,3 +3982,37 @@ nav button.sel {
     grid-column: 2;
   }
 }
+
+
+/* Austen brand logo */
+.austenBrand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.austenLogo {
+  width: 116px;
+  height: 78px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  border-radius: 12px;
+}
+.austenBrandText {
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  header .austenBrand {
+    gap: 10px;
+    align-items: center;
+  }
+  .austenLogo {
+    width: 82px;
+    height: 58px;
+  }
+  .austenBrandText h1 {
+    font-size: clamp(1.25rem, 6vw, 1.75rem);
+  }
+  .austenBrandText p {
+    display: none;
+  }
+}

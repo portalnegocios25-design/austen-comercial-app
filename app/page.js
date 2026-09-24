@@ -4151,10 +4151,17 @@ export default function Home() {
         </div>
       )}
       <header>
-        <div>
-          <small>AUSTEN · GRUPO EUROFRAL</small>
-          <h1>Austen Comercial</h1>
-          <p>Execução de campo, estoque e reposição inteligente.</p>
+        <div className="austenBrand">
+          <img
+            className="austenLogo"
+            src="/austen-logo.webp"
+            alt="Austen — Strong brands to strong markets"
+          />
+          <div className="austenBrandText">
+            <small>AUSTEN · GRUPO EUROFRAL</small>
+            <h1>Austen Comercial</h1>
+            <p>Execução de campo, estoque e reposição inteligente.</p>
+          </div>
         </div>
         <div className="profileSwitch">
           <button
