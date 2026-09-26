@@ -4625,3 +4625,52 @@ nav button.sel {
   background: linear-gradient(135deg, var(--danger), #7c221d);
   box-shadow: 0 4px 12px rgba(169, 53, 48, 0.28);
 }
+
+/* Austen brand — logo com proporção e enquadramento consistentes */
+.austenBrand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+.austenLogo {
+  display: block;
+  width: 116px;
+  height: 78px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 116px;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.austenBrandText { min-width: 0; }
+
+@media (max-width: 700px) {
+  header .austenBrand { width: 100%; min-width: 0; gap: 12px; }
+  .austenLogo {
+    width: 64px;
+    height: 56px;
+    max-width: 64px;
+    flex: 0 0 64px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+  .austenBrandText { flex: 1; min-width: 0; }
+  .austenBrandText small {
+    display: block;
+    font-size: 8px;
+    letter-spacing: .08em;
+    white-space: nowrap;
+  }
+  .austenBrandText h1 {
+    margin: 2px 0 0;
+    font-size: clamp(18px, 5vw, 22px);
+    line-height: 1.08;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .austenBrandText p { display: none; }
+}
