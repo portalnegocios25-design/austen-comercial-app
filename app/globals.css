@@ -3982,3 +3982,646 @@ nav button.sel {
     grid-column: 2;
   }
 }
+
+/* ============ Modulo do vendedor: redesign 2026-09 ============ */
+.sellerHomeScreen {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+.sellerHomeHead h2 {
+  margin: 4px 0 0;
+  font-size: 26px;
+}
+.sellerHomeHead p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+.homeSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.homeSummary article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+.homeSummary b {
+  display: block;
+  font-size: 22px;
+}
+.homeSummary span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.homeCardMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: 0 10px 24px rgba(22, 134, 232, 0.3);
+  text-align: left;
+}
+.homeCardMain strong {
+  font-size: 19px;
+}
+.homeCardMain p {
+  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  max-width: 46ch;
+}
+.homeCardArrow {
+  font-size: 28px;
+}
+.homeCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.homeCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: left;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.homeCard:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.homeCard strong {
+  font-size: 15px;
+}
+.homeCard span {
+  color: var(--muted);
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .homeSummary,
+  .homeCards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Navegacao inferior */
+.bottomNav {
+  gap: 2px;
+}
+.bottomNav button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  min-width: 58px;
+}
+.navIcon {
+  width: 22px;
+  height: 22px;
+}
+
+/* Stepper das 4 etapas do atendimento */
+.visitStepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: 14px 0 6px;
+}
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  color: var(--muted);
+}
+.stepDot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9edf0;
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+}
+.stepItem.current .stepDot {
+  background: var(--accent);
+  color: #fff;
+}
+.stepItem.current {
+  color: var(--ink);
+}
+.stepItem.done .stepDot {
+  background: var(--success);
+  color: #fff;
+}
+.stepItem small {
+  font-size: 10.5px;
+  line-height: 1.2;
+}
+@media (max-width: 600px) {
+  .stepItem small {
+    display: none;
+  }
+}
+
+/* Telas do assistente (wizard) */
+.wizardScreen {
+  margin-top: 18px;
+}
+.wizardFilters {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+.chipRow {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.chip {
+  background: #eef1f3;
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.chip.on {
+  background: var(--accent);
+  color: #fff;
+}
+.wizardFooter {
+  position: sticky;
+  bottom: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-top: 20px;
+  box-shadow: var(--shadow-hover);
+}
+.wizardFooterStats {
+  display: flex;
+  gap: 18px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.wizardFooterStats b {
+  display: block;
+  color: var(--ink);
+  font-size: 16px;
+}
+.wizardFooterActions {
+  display: flex;
+  gap: 10px;
+}
+@media (max-width: 640px) {
+  .wizardFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .wizardFooterStats {
+    justify-content: space-between;
+  }
+}
+
+/* Cartoes de produto (contagem / sugestao) */
+.stockCard,
+.suggestionCard {
+  display: grid;
+  gap: 12px;
+}
+.lastPurchases {
+  border-top: 1px solid #edf0f2;
+  padding-top: 10px;
+  margin-top: 4px;
+}
+.lastPurchases small {
+  color: var(--muted);
+}
+.lastPurchases ul {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.lastPurchases li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.qtyField {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+.qtyField .stockInput {
+  width: 64px;
+  text-align: center;
+  margin-top: 0;
+}
+.qtyStep {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+.qtyStep:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Revisar pedido */
+.reviewList {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+}
+.removeItem {
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 8px 10px;
+}
+.reviewSummary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 18px;
+  box-shadow: var(--shadow-card);
+}
+.reviewSummary div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.reviewSummary span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.reviewSummary b {
+  font-size: 18px;
+}
+.reviewFields {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.reviewFields label {
+  display: grid;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 700;
+}
+.reviewFields input,
+.reviewFields textarea {
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--ink);
+}
+.reviewFields textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+@media (max-width: 700px) {
+  .reviewSummary {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Finalizar atendimento */
+.finalizeSummary {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+.finalizeDetails {
+  display: grid;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+}
+.finalizeDetails div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  border-bottom: 1px solid #f0f2f4;
+  padding-bottom: 8px;
+}
+.finalizeDetails div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.finalizeDetails span {
+  color: var(--muted);
+}
+
+/* Modulo Pedidos: lista, detalhe, copia */
+.ordersScreen {
+  margin-top: 18px;
+}
+.ordersList {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.orderCard {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-card);
+}
+.orderCard:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.orderCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.orderCardClient small {
+  display: block;
+  color: var(--muted);
+}
+.orderCardMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.orderCardValor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f0f2f4;
+  padding-top: 8px;
+}
+.orderCardValor .chev {
+  color: var(--muted);
+}
+
+.status.a_transmitir {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.status.enviando {
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+.status.transmitido {
+  background: var(--success-soft);
+  color: var(--success);
+}
+.status.erro_transmissao {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.status.rascunho,
+.status.cancelado {
+  background: #eef1f3;
+  color: var(--muted);
+}
+
+.orderDetailScreen {
+  margin-top: 18px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  gap: 16px;
+}
+.orderDetailTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.orderDetailMenuWrap {
+  position: relative;
+}
+.menuDots {
+  background: #eef1f3;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.orderMenu {
+  position: absolute;
+  right: 0;
+  top: 44px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hover);
+  display: grid;
+  min-width: 200px;
+  overflow: hidden;
+  z-index: 6;
+}
+.orderMenu button {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 13.5px;
+}
+.orderMenu button:hover {
+  background: #f4f6f8;
+}
+.orderMenu .menuDanger {
+  color: var(--danger);
+}
+.orderClientCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-card);
+  display: grid;
+  gap: 2px;
+}
+.orderClientCard small {
+  color: var(--muted);
+}
+.orderDetailKpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.orderDetailKpis article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+.orderDetailKpis span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.orderDetailKpis b {
+  display: block;
+  font-size: 17px;
+}
+.orderItemsList {
+  display: grid;
+  gap: 2px;
+}
+.transmissionTimeline {
+  margin-top: 10px;
+}
+
+/* Copia para o cliente (recibo) */
+.customerReceipt {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-card);
+  display: grid;
+  gap: 14px;
+}
+.receiptHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  font-weight: 800;
+}
+.receiptMeta {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.receiptTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.receiptTable th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 11px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.receiptTable td {
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f2f4;
+}
+.receiptTotals {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+.receiptThanks {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+.receiptActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+@media print {
+  header,
+  .bottomNav,
+  .backClients,
+  .receiptActions {
+    display: none !important;
+  }
+}
+
+/* Mais opcoes */
+.moreMenuScreen {
+  margin-top: 18px;
+}
+.moreMenuList {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.moreMenuList button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-card);
+}
+.moreMenuList span {
+  grid-column: 1;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.moreMenuList .chev {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  align-self: center;
+  color: var(--muted);
+  font-size: 20px;
+}
+.lastPurchaseInfo {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.primary.danger {
+  background: linear-gradient(135deg, var(--danger), #7c221d);
+  box-shadow: 0 4px 12px rgba(169, 53, 48, 0.28);
+}

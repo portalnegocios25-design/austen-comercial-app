@@ -1,796 +1,37 @@
 "use client";
 import { useMemo, useState } from "react";
-const catalogo = [
-  {
-    nome: "Personalidade Total Care Super P 70",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "P",
-    unidades: 70,
-  },
-  {
-    nome: "Personalidade Total Care Super M 60",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "M",
-    unidades: 60,
-  },
-  {
-    nome: "Personalidade Total Care Super G 54",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "G",
-    unidades: 54,
-  },
-  {
-    nome: "Personalidade Total Care Super XG 48",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "XG",
-    unidades: 48,
-  },
-  {
-    nome: "Personalidade Total Care Super XXG 42",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "XXG",
-    unidades: 42,
-  },
-  {
-    nome: "Personalidade Ultra Hiper P 96",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "P",
-    unidades: 96,
-  },
-  {
-    nome: "Personalidade Ultra Hiper M 80",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "M",
-    unidades: 80,
-  },
-  {
-    nome: "Personalidade Ultra Hiper G 72",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "G",
-    unidades: 72,
-  },
-  {
-    nome: "Personalidade Ultra Hiper XG 64",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XG",
-    unidades: 64,
-  },
-  {
-    nome: "Personalidade Ultra Hiper XXG 56",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XXG",
-    unidades: 56,
-  },
-  {
-    nome: "Personalidade Ultra Super P 70",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "P",
-    unidades: 70,
-  },
-  {
-    nome: "Personalidade Ultra Super M 60",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "M",
-    unidades: 60,
-  },
-  {
-    nome: "Personalidade Ultra Super G 54",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "G",
-    unidades: 54,
-  },
-  {
-    nome: "Personalidade Ultra Super XG 48",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XG",
-    unidades: 48,
-  },
-  {
-    nome: "Personalidade Ultra Super XXG 42",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XXG",
-    unidades: 42,
-  },
-  {
-    nome: "Personalidade Ultra Mega P 46",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "P",
-    unidades: 46,
-  },
-  {
-    nome: "Personalidade Ultra Mega M 40",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "M",
-    unidades: 40,
-  },
-  {
-    nome: "Personalidade Ultra Mega G 34",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "G",
-    unidades: 34,
-  },
-  {
-    nome: "Personalidade Ultra Mega XG 32",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XG",
-    unidades: 32,
-  },
-  {
-    nome: "Personalidade Ultra Mega XXG 28",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XXG",
-    unidades: 28,
-  },
-  {
-    nome: "Personalidade Ultra Jumbinho P 20",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "P",
-    unidades: 20,
-  },
-  {
-    nome: "Personalidade Ultra Jumbinho M 18",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "M",
-    unidades: 18,
-  },
-  {
-    nome: "Personalidade Ultra Jumbinho G 16",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "G",
-    unidades: 16,
-  },
-  {
-    nome: "Personalidade Ultra Jumbinho XG 12",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XG",
-    unidades: 12,
-  },
-  {
-    nome: "Personalidade Ultra Jumbinho XXG 12",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "XXG",
-    unidades: 12,
-  },
-  {
-    nome: "Personalidade Plus Regular P 70",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "P",
-    unidades: 70,
-  },
-  {
-    nome: "Personalidade Plus Regular M 60",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "M",
-    unidades: 60,
-  },
-  {
-    nome: "Personalidade Plus Regular G 54",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "G",
-    unidades: 54,
-  },
-  {
-    nome: "Personalidade Plus Regular XG 48",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XG",
-    unidades: 48,
-  },
-  {
-    nome: "Personalidade Plus Regular XXG 42",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XXG",
-    unidades: 42,
-  },
-  {
-    nome: "Personalidade Plus Hiper P 100",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "P",
-    unidades: 100,
-  },
-  {
-    nome: "Personalidade Plus Hiper M 72",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "M",
-    unidades: 72,
-  },
-  {
-    nome: "Personalidade Plus Hiper G 62",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "G",
-    unidades: 62,
-  },
-  {
-    nome: "Personalidade Plus Hiper XG 54",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XG",
-    unidades: 54,
-  },
-  {
-    nome: "Personalidade Plus Hiper XXG 46",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XXG",
-    unidades: 46,
-  },
-  {
-    nome: "Personalidade Plus Econômica P 60",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "P",
-    unidades: 60,
-  },
-  {
-    nome: "Personalidade Plus Econômica M 52",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "M",
-    unidades: 52,
-  },
-  {
-    nome: "Personalidade Plus Econômica G 46",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "G",
-    unidades: 46,
-  },
-  {
-    nome: "Personalidade Plus Econômica XG 40",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XG",
-    unidades: 40,
-  },
-  {
-    nome: "Personalidade Plus Econômica XXG 34",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "XXG",
-    unidades: 34,
-  },
-  {
-    nome: "Toalha Umedecida Total Care 20 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "",
-    unidades: 20,
-  },
-  {
-    nome: "Toalha Umedecida Total Care 50 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "",
-    unidades: 50,
-  },
-  {
-    nome: "Toalha Umedecida Total Care 100 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "",
-    unidades: 100,
-  },
-  {
-    nome: "Toalha Umedecida Total Care 120 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Total Care",
-    tamanho: "",
-    unidades: 120,
-  },
-  {
-    nome: "Toalha Umedecida Ultra 16 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "",
-    unidades: 16,
-  },
-  {
-    nome: "Toalha Umedecida Ultra 50 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "",
-    unidades: 50,
-  },
-  {
-    nome: "Toalha Umedecida Ultra 100 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Ultra",
-    tamanho: "",
-    unidades: 100,
-  },
-  {
-    nome: "Toalha Umedecida Plus 16 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "",
-    unidades: 16,
-  },
-  {
-    nome: "Toalha Umedecida Plus 50 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "",
-    unidades: 50,
-  },
-  {
-    nome: "Toalha Umedecida Plus 100 un",
-    linha: "Infantil",
-    marca: "Personalidade Baby",
-    familia: "Plus",
-    tamanho: "",
-    unidades: 100,
-  },
-  { nome: "Higifral Confort", linha: "Adulto", marca: "Higifral" },
-  { nome: "Higifral Premium", linha: "Adulto", marca: "Higifral" },
-  { nome: "Higifral Noite e Dia", linha: "Adulto", marca: "Higifral" },
-  { nome: "Higifral Pants", linha: "Adulto", marca: "Higifral" },
-  { nome: "Toalha Umedecida Higifral", linha: "Adulto", marca: "Higifral" },
-  {
-    nome: "Protetor de Colchão Descartável Higifral",
-    linha: "Adulto",
-    marca: "Higifral",
-  },
-  { nome: "Vida Nova Comfort Regular P", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Regular M", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Regular G", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Regular XG", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Mega P", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Mega M", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Mega G", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Super M", linha: "Adulto", marca: "Vida Nova" },
-  { nome: "Vida Nova Comfort Pants", linha: "Adulto", marca: "Vida Nova" },
-  {
-    nome: "Lenços Umedecidos Antisséptico Personalidade 20 un",
-    linha: "Higiene",
-    marca: "Personalidade Antisséptico",
-  },
-  {
-    nome: "Lenços Íntimos Lady Demak 20 un",
-    linha: "Higiene",
-    marca: "Personalidade Lady",
-  },
-  {
-    nome: "Lenços Íntimos Lady Clean Side 20 un",
-    linha: "Higiene",
-    marca: "Personalidade Lady",
-  },
-  { nome: "Tapete Higiênico Super Dog", linha: "Pet", marca: "Super Dog" },
-  { nome: "Tapete Higiênico Super Dog Baby", linha: "Pet", marca: "Super Dog" },
-  { nome: "Toalhas Umedecidas Super Dog", linha: "Pet", marca: "Super Dog" },
-  {
-    nome: "Toalhas Umedecidas Sininho 50 un",
-    linha: "Infantil",
-    marca: "Sininho",
-  },
-  { nome: "Toalha Umedecida Papegu 50 un", linha: "Infantil", marca: "Papegu" },
-  {
-    nome: "Toalhas Umedecidas Petty Baby 100 un",
-    linha: "Infantil",
-    marca: "Petty Baby",
-  },
-  {
-    nome: "Toalhas Umedecidas Petty Baby 50 un",
-    linha: "Infantil",
-    marca: "Petty Baby",
-  },
-  {
-    nome: "Toalha Petty Baby Premium 100 un",
-    linha: "Infantil",
-    marca: "Petty Baby",
-  },
-  {
-    nome: "Toalha Petty Baby Premium 50 un",
-    linha: "Infantil",
-    marca: "Petty Baby",
-  },
-];
-const vendedores = [
-  {
-    id: 1,
-    nome: "Carlos Benítez",
-    zona: "Alto Paraná",
-    meta: 320,
-    metaPercentual: 12,
-    metaMix: 8,
-    realizado: 78,
-    clientes: 18,
-  },
-  {
-    id: 2,
-    nome: "Miguel López",
-    zona: "Itapúa",
-    meta: 280,
-    metaPercentual: 10,
-    metaMix: 7,
-    realizado: 64,
-    clientes: 15,
-  },
-  {
-    id: 3,
-    nome: "Ana Gómez",
-    zona: "Caaguazú",
-    meta: 240,
-    metaPercentual: 15,
-    metaMix: 9,
-    realizado: 91,
-    clientes: 13,
-  },
-];
-const campanhasIniciais = [
-  {
-    id: 1,
-    nome: "Toalhinhas Personalidade",
-    tipo: "Sell-in",
-    regraTipo: "Quantidade total",
-    produto: "",
-    mixMinimo: 0,
-    minimo: 24,
-    inicio: "2026-09-01",
-    fim: "2026-09-30",
-    publicoTipo: "Todos",
-    publicoId: "",
-    mecanica: "Compre 24 unidades e ganhe 5 toalhinhas",
-    brinde: "5 toalhinhas",
-    status: "Ativa",
-  },
-  {
-    id: 2,
-    nome: "Ação de giro no PDV",
-    tipo: "Sell-out",
-    regraTipo: "Mix de produtos",
-    produto: "",
-    mixMinimo: 3,
-    minimo: 0,
-    inicio: "2026-09-01",
-    fim: "2026-10-31",
-    publicoTipo: "Todos",
-    publicoId: "",
-    mecanica: "Implante 3 produtos participantes",
-    brinde: "Material promocional",
-    status: "Ativa",
-  },
-];
-const territorios = [
-  {
-    nome: "Alto Paraná",
-    vendedor: "Carlos Benítez",
-    clientes: 18,
-    cobertura: 82,
-    rupturas: 3,
-    crescimento: 11,
-  },
-  {
-    nome: "Itapúa",
-    vendedor: "Miguel López",
-    clientes: 15,
-    cobertura: 68,
-    rupturas: 5,
-    crescimento: 6,
-  },
-  {
-    nome: "Caaguazú",
-    vendedor: "Ana Gómez",
-    clientes: 13,
-    cobertura: 94,
-    rupturas: 1,
-    crescimento: 15,
-  },
-  {
-    nome: "Central",
-    vendedor: "A definir",
-    clientes: 0,
-    cobertura: 0,
-    rupturas: 0,
-    crescimento: 0,
-  },
-  {
-    nome: "Canindeyú",
-    vendedor: "A definir",
-    clientes: 0,
-    cobertura: 0,
-    rupturas: 0,
-    crescimento: 0,
-  },
-];
-const clientes = [
-  {
-    id: 1,
-    vendedorId: 1,
-    metaVenda: 120,
-    vendaRealizada: 72,
-    metaMixCliente: 8,
-    justificativa:
-      "Cliente reduziu o pedido por excesso de estoque em outra marca.",
-    acao: "Revisar giro e retornar em 7 dias.",
-    nome: "Supermercado Central",
-    cidade: "Ciudad del Este",
-    canal: "Supermercado",
-    tipoCliente: "Supermercado",
-    dias: 18,
-    meta: 120,
-    produtos: [
-      {
-        nome: "Personalidade Ultra Super G 54",
-        estoque: 3,
-        venda: 12,
-        compras: [
-          ["05/09", 3, 12],
-          ["17/08", 2, 12],
-          ["12/08", 3, 12],
-        ],
-      },
-      {
-        nome: "Personalidade Ultra Super M 60",
-        estoque: 0,
-        venda: 10,
-        compras: [
-          ["07/09", 0, 10],
-          ["24/08", 2, 10],
-          ["10/08", 4, 10],
-        ],
-      },
-      {
-        nome: "Higifral",
-        estoque: 8,
-        venda: 12,
-        compras: [
-          ["06/09", 8, 12],
-          ["23/08", 7, 12],
-          ["09/08", 9, 12],
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    vendedorId: 1,
-    metaVenda: 180,
-    vendaRealizada: 95,
-    metaMixCliente: 10,
-    justificativa: "Ruptura de tamanhos e redução temporária do fluxo.",
-    acao: "Implantar XG e negociar reposição.",
-    nome: "Comercial Paraná",
-    cidade: "Presidente Franco",
-    canal: "Mayorista",
-    tipoCliente: "Distribuidor",
-    dias: 26,
-    meta: 180,
-    produtos: [
-      {
-        nome: "Personalidade Plus Hiper G 62",
-        estoque: 1,
-        venda: 18,
-        compras: [
-          ["02/09", 1, 18],
-          ["12/08", 4, 16],
-          ["22/07", 2, 16],
-        ],
-      },
-      {
-        nome: "Personalidade Plus Hiper XG 54",
-        estoque: 0,
-        venda: 12,
-        compras: [
-          ["02/09", 0, 12],
-          ["12/08", 1, 12],
-          ["22/07", 3, 10],
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    vendedorId: 2,
-    metaVenda: 90,
-    vendaRealizada: 84,
-    metaMixCliente: 7,
-    justificativa: "",
-    acao: "",
-    nome: "Mercado San José",
-    cidade: "Minga Guazú",
-    canal: "Supermercado",
-    tipoCliente: "Supermercado",
-    dias: 11,
-    meta: 90,
-    produtos: [
-      {
-        nome: "Personalidade Total Care Super M 60",
-        estoque: 7,
-        venda: 8,
-        compras: [
-          ["11/09", 7, 8],
-          ["28/08", 5, 8],
-          ["14/08", 6, 8],
-        ],
-      },
-      {
-        nome: "Higifral",
-        estoque: 5,
-        venda: 6,
-        compras: [
-          ["11/09", 5, 6],
-          ["28/08", 4, 6],
-          ["14/08", 5, 6],
-        ],
-      },
-    ],
-  },
-];
-const imgBase = "https://personalidadebaby.com.br/wp-content/uploads/";
-const imagensSku = {
-  "Personalidade Ultra Hiper P 96":
-    "2023/05/3DI.1543-REV7-FR-PERSONALIDADE-B-ULTRA-SEC-HIPER-PEQ-04X96UN.png",
-  "Personalidade Ultra Hiper M 80":
-    "2023/05/3DI.1544-REV7-FR-PERSONALIDADE-B-ULTRA-SEC-HIPER-MED-04X80UN.png",
-  "Personalidade Ultra Hiper G 72":
-    "2023/05/3DI.1545-REV7-FR-PERSONALIDADE-B-ULTRA-SEC-HIPER-GDE-04X72UN.png",
-  "Personalidade Ultra Hiper XG 64":
-    "2023/05/3DI.1546-REV7-FR-PERSONALIDADE-B-ULTRA-SEC-HIPER-EXG-04X64UN.png",
-  "Personalidade Ultra Hiper XXG 56":
-    "2023/05/3DI.1547-REV7-FR-PERSONALIDADE-B-ULTRA-SEC-HIPER-XXG-04X56UN.png",
-  "Personalidade Ultra Super P 70":
-    "2023/05/3DI.1803-REV0-FR-PERSONALIDADE-B-ULTRA-SEC-SUPER-PEQ-06X70UN.png",
-  "Personalidade Ultra Super M 60":
-    "2023/05/3DI.1804-REV0-FR-PERSONALIDADE-B-ULTRA-SEC-SUPER-MED-06X60UN.png",
-  "Personalidade Ultra Super G 54":
-    "2023/05/3DI.1805-REV0-FR-PERSONALIDADE-B-ULTRA-SEC-SUPER-GDE-06X54UN.png",
-  "Personalidade Ultra Super XG 48":
-    "2023/05/3DI.1806-REV0-FR-PERSONALIDADE-B-ULTRA-SEC-SUPER-EXG-06X48UN.png",
-  "Personalidade Ultra Super XXG 42":
-    "2023/05/3DI.1807-REV0-FR-PERSONALIDADE-B-ULTRA-SEC-SUPER-XXG-06X42UN.png",
-  "Personalidade Ultra Mega XG 32":
-    "2023/05/3DI.1541-REV4-FR-PERSONALIDADE-B-ULTRA-SEC-MEGA-EXG-06X32UN.png",
-  "Personalidade Ultra Mega XXG 28":
-    "2023/05/3DI.1542-REV4-FR-PERSONALIDADE-B-ULTRA-SEC-MEGA-XXG-06X28UN.png",
-  "Personalidade Ultra Jumbinho P 20": "2023/07/P.png",
-  "Personalidade Ultra Jumbinho M 18": "2023/07/M.png",
-  "Personalidade Ultra Jumbinho G 16": "2023/07/G.png",
-  "Personalidade Ultra Jumbinho XG 12": "2023/07/XG.png",
-  "Personalidade Ultra Jumbinho XXG 12": "2023/07/XXG.png",
-  "Personalidade Plus Hiper P 100":
-    "2023/05/3DI.1140-REV11-FR-PERSONALIDADE-B-PLUS-HIPER-PEQ-06X100UN.png",
-  "Personalidade Plus Hiper M 72":
-    "2023/05/3DI.1139-REV11-FR-PERSONALIDADE-B-PLUS-HIPER-MED-06X72UN.png",
-  "Personalidade Plus Hiper G 62":
-    "2023/05/3DI.1138-REV11-FR-PERSONALIDADE-B-PLUS-HIPER-GDE-06X62UN.png",
-  "Personalidade Plus Hiper XG 54":
-    "2023/05/3DI.1137-REV11-FR-PERSONALIDADE-B-PLUS-HIPER-EXG-06X54UN.png",
-  "Personalidade Plus Hiper XXG 46":
-    "2023/05/3DI.1483-REV11-FR-PERSONALIDADE-B-PLUS-HIPER-XXG-06X46UN.png",
-  "Personalidade Plus Econômica P 60":
-    "2023/05/3DI.1829-REV0-FR-PERSONALIDADE-B-PLUS-ECON-PEQ-06X60UN.png",
-  "Personalidade Plus Econômica M 52":
-    "2023/05/3DI.1830-REV0-FR-PERSONALIDADE-B-PLUS-ECON-MED-06X52UN.png",
-  "Personalidade Plus Econômica G 46":
-    "2023/05/3DI.1831-REV0-FR-PERSONALIDADE-B-PLUS-ECON-GDE-06X46UN.png",
-  "Personalidade Plus Econômica XG 40":
-    "2023/05/3DI.1832-REV0-FR-PERSONALIDADE-B-PLUS-ECON-EXG-06X40UN.png",
-  "Personalidade Plus Econômica XXG 34":
-    "2023/05/3DI.1833-REV0-FR-PERSONALIDADE-B-PLUS-ECON-XXG-06X34UN.png",
-};
-const imagemLinha = (p) =>
-  p.familia === "Ultra"
-    ? imgBase + "2023/02/1.png"
-    : p.familia === "Plus"
-      ? imgBase + "2023/02/LINHA-PLUS-fralda-plus-3.png"
-      : p.familia === "Total Care"
-        ? imgBase + "2023/02/LINHA-TOTAL-CARE-fralda.png"
-        : "";
-const imagemProduto = (p) =>
-  imagensSku[p.nome] ? imgBase + imagensSku[p.nome] : imagemLinha(p);
-const fonteProduto = (p) =>
-  p.familia === "Ultra"
-    ? "https://personalidadebaby.com.br/linha-ultra/"
-    : p.familia === "Total Care"
-      ? "https://personalidadebaby.com.br/linha-total-care/"
-      : p.familia === "Plus"
-        ? "https://personalidadebaby.com.br/linha-plus/"
-        : "";
-const descricaoProduto = (p) =>
-  p.familia === "Total Care"
-    ? "Gel superabsorvente em toda a extensão, núcleo que distribui os líquidos e proteção dia e noite por até 12 horas."
-    : p.familia === "Ultra"
-      ? "Gel superabsorvente, núcleo de distribuição de líquidos e proteção dia e noite por até 10 horas."
-      : p.familia === "Plus"
-        ? "Gel superabsorvente em toda a extensão e núcleo que distribui os líquidos, ajudando a manter a pele seca."
-        : "";
-const calc = (p) => {
-  const media = p.compras.reduce((s, x) => s + x[2], 0) / p.compras.length;
-  const sug = Math.max(0, Math.ceil(media * 1.15 - p.estoque));
-  return {
-    media: Math.round(media),
-    sug,
-    status:
-      p.estoque === 0
-        ? "Ruptura"
-        : p.estoque / media < 0.35
-          ? "Atenção"
-          : "Normal",
-  };
-};
+import {
+  catalogo,
+  vendedores,
+  campanhasIniciais,
+  territorios,
+  clientes,
+  imagemProduto,
+  fonteProduto,
+  descricaoProduto,
+  calc,
+} from "./lib/data";
+import {
+  STATUS,
+  gerarProtocolo,
+  formatarNumeroPedido,
+  formatarDataHora,
+} from "./lib/orderStatus";
+import BottomNavigation from "./components/BottomNavigation";
+import SellerHome from "./components/SellerHome";
+import ClientList from "./components/ClientList";
+import StartVisit from "./components/StartVisit";
+import StockCount from "./components/StockCount";
+import OrderSuggestion from "./components/OrderSuggestion";
+import OrderReview from "./components/OrderReview";
+import FinalizeVisit from "./components/FinalizeVisit";
+import Orders from "./components/Orders";
+import OrderDetail from "./components/OrderDetail";
+import CustomerOrderCopy from "./components/CustomerOrderCopy";
+import ProductCatalog from "./components/ProductCatalog";
+import MoreMenu from "./components/MoreMenu";
 export default function Home() {
-  const [aba, setAba] = useState("Visão geral"),
+  const [aba, setAba] = useState("Início"),
     [baseClientes, setBaseClientes] = useState(clientes),
     [cliente, setCliente] = useState(clientes[0]),
     [clienteAbertoId, setClienteAbertoId] = useState(null),
@@ -818,9 +59,16 @@ export default function Home() {
     [buscaProduto, setBuscaProduto] = useState(""),
     [pedidosSalvos, setPedidosSalvos] = useState([]),
     [campanhas, setCampanhas] = useState(campanhasIniciais),
-    [campanhaPedido, setCampanhaPedido] = useState(null),
-    [sugVendedor, setSugVendedor] = useState({}),
     [motivoSug, setMotivoSug] = useState("Promoção"),
+    [etapaAtendimento, setEtapaAtendimento] = useState(1),
+    [pedidoObs, setPedidoObs] = useState(""),
+    [condicaoPagamento, setCondicaoPagamento] = useState(""),
+    [previsaoEntrega, setPrevisaoEntrega] = useState(""),
+    [pedidoDetalheId, setPedidoDetalheId] = useState(null),
+    [pedidoCopiaId, setPedidoCopiaId] = useState(null),
+    [filtroPedidoStatus, setFiltroPedidoStatus] = useState("Todos"),
+    [buscaPedido, setBuscaPedido] = useState(""),
+    [periodoPedido, setPeriodoPedido] = useState("Tudo"),
     [solicitacoes, setSolicitacoes] = useState([]),
     [novaCampanha, setNovaCampanha] = useState(false),
     [sugCampanhaAberta, setSugCampanhaAberta] = useState(false),
@@ -857,6 +105,19 @@ export default function Home() {
       ),
     [busca, clientesPermitidos],
   );
+  const agoraRef = new Date();
+  const visitasMes = historicoVisitas.filter((v) => {
+    const [d, m, y] = v.data.split("/").map(Number);
+    return (
+      m === agoraRef.getMonth() + 1 &&
+      y === agoraRef.getFullYear() &&
+      clientesPermitidos.some((c) => c.nome === v.cliente)
+    );
+  }).length;
+  const vendasMes = clientesPermitidos.reduce(
+    (s, c) => s + (c.vendaRealizada || 0),
+    0,
+  );
   const salvarCliente = (e) => {
     e.preventDefault();
     if (!novo.nome || !novo.cidade) return;
@@ -889,8 +150,6 @@ export default function Home() {
     });
     setCadastro(false);
   };
-  const sugestao = cliente.produtos.reduce((s, p) => s + calc(p).sug, 0);
-  const qtdPedido = Object.values(pedido).reduce((s, n) => s + (+n || 0), 0);
   const abrirProduto = (prod) => {
     const info = produtosGestao.find((x) => x.nome === prod.nome) || prod;
     setProdutoApresentacao({
@@ -921,61 +180,6 @@ export default function Home() {
       baseClientes.map((c) => (c.id === cliente.id ? atualizado : c)),
     );
   };
-  const salvarContagem = () => {
-    if (!Object.keys(contagem).length) return;
-    const agora = new Date().toLocaleDateString("pt-BR", {
-      day: "2-digit",
-      month: "2-digit",
-    });
-    setBaseClientes(
-      baseClientes.map((c) =>
-        c.id !== cliente.id
-          ? c
-          : {
-              ...c,
-              dias: 0,
-              produtos: c.produtos.map((p) =>
-                contagem[p.nome] === undefined
-                  ? p
-                  : {
-                      ...p,
-                      estoque: +contagem[p.nome],
-                      compras: [
-                        [agora, +contagem[p.nome], p.venda],
-                        ...p.compras,
-                      ].slice(0, 3),
-                    },
-              ),
-            },
-      ),
-    );
-    setCliente({
-      ...cliente,
-      dias: 0,
-      produtos: cliente.produtos.map((p) =>
-        contagem[p.nome] === undefined
-          ? p
-          : {
-              ...p,
-              estoque: +contagem[p.nome],
-              compras: [
-                [agora, +contagem[p.nome], p.venda],
-                ...p.compras,
-              ].slice(0, 3),
-            },
-      ),
-    });
-    setHistoricoVisitas([
-      {
-        cliente: cliente.nome,
-        data: new Date().toLocaleDateString("pt-BR"),
-        itens: Object.keys(contagem).length,
-      },
-      ...historicoVisitas,
-    ]);
-    setContagem({});
-    setVisita(false);
-  };
   const campanhaElegivel = (c) => {
     const hoje = new Date().toISOString().slice(0, 10);
     const periodo =
@@ -988,445 +192,199 @@ export default function Home() {
         String(c.publicoId) === String(cliente.vendedorId));
     return periodo && publico;
   };
-  const confirmarPedido = () => {
-    if (!qtdPedido) return;
-    const itens = cliente.produtos
-      .map((p) => ({
-        nome: p.nome,
-        sistema: calc(p).sug,
-        vendedor: +(sugVendedor[p.nome] || calc(p).sug),
-        pedido: +(pedido[p.nome] || 0),
-      }))
+  const solicitarAcao = () => setSugCampanhaAberta(true);
+  const vendedorAtual = baseVendedores.find((v) => v.id === usuarioVendedorId);
+
+  const iniciarAtendimento = (c) => {
+    setCliente(c);
+    setClienteAbertoId(c.id);
+    setVisita(true);
+    setEtapaAtendimento(1);
+  };
+
+  const encerrarAtendimento = () => {
+    setVisita(false);
+    setContagem({});
+    setPedido({});
+    setPedidoObs("");
+    setCondicaoPagamento("");
+    setPrevisaoEntrega("");
+    setMotivoSug("Promoção");
+    setEtapaAtendimento(1);
+  };
+
+  const finalizarAtendimento = () => {
+    const itensPedido = cliente.produtos
+      .map((p) => ({ nome: p.nome, pedido: +(pedido[p.nome] || 0) }))
       .filter((x) => x.pedido > 0);
+    if (!itensPedido.length) return;
+    const qtdTotal = itensPedido.reduce((s, i) => s + i.pedido, 0);
+    const agora = new Date().toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+    });
+    const aplicarContagem = (c) => ({
+      ...c,
+      dias: 0,
+      produtos: c.produtos.map((p) => {
+        if (contagem[p.nome] === undefined || contagem[p.nome] === "") return p;
+        const qtdPedidoItem = +(pedido[p.nome] || 0);
+        return {
+          ...p,
+          estoque: +contagem[p.nome],
+          compras: [
+            [agora, +contagem[p.nome], qtdPedidoItem > 0 ? qtdPedidoItem : p.venda],
+            ...p.compras,
+          ].slice(0, 3),
+        };
+      }),
+    });
+    setBaseClientes(
+      baseClientes.map((c) => (c.id === cliente.id ? aplicarContagem(c) : c)),
+    );
+    const clienteAtualizado = aplicarContagem(cliente);
+    setCliente(clienteAtualizado);
+    if (Object.keys(contagem).length) {
+      setHistoricoVisitas([
+        {
+          cliente: cliente.nome,
+          data: new Date().toLocaleDateString("pt-BR"),
+          itens: Object.keys(contagem).length,
+        },
+        ...historicoVisitas,
+      ]);
+    }
     const campanhaCumprida = (c) => {
       if (c.status !== "Ativa" || !campanhaElegivel(c)) return false;
-      if (c.regraTipo === "Quantidade total")
-        return qtdPedido >= (c.minimo || 0);
+      if (c.regraTipo === "Quantidade total") return qtdTotal >= (c.minimo || 0);
       if (c.regraTipo === "Produto específico")
         return (
-          (itens.find((i) => i.nome === c.produto)?.pedido || 0) >=
+          (itensPedido.find((i) => i.nome === c.produto)?.pedido || 0) >=
           (c.minimo || 0)
         );
       if (c.regraTipo === "Mix de produtos")
-        return itens.filter((i) => i.pedido > 0).length >= (c.mixMinimo || 0);
+        return itensPedido.length >= (c.mixMinimo || 0);
       if (c.regraTipo === "Quantidade + mix")
-        return (
-          qtdPedido >= (c.minimo || 0) &&
-          itens.filter((i) => i.pedido > 0).length >= (c.mixMinimo || 0)
-        );
+        return qtdTotal >= (c.minimo || 0) && itensPedido.length >= (c.mixMinimo || 0);
       return false;
     };
     const campanhaAuto = campanhas.find((c) => campanhaCumprida(c));
-    setPedidosSalvos([
-      {
-        id: Date.now(),
-        numero: "PED-" + String(Date.now()).slice(-6),
-        cliente: cliente.nome,
-        data: new Date().toLocaleDateString("pt-BR"),
-        itens,
-        total: qtdPedido,
-        status: "Preparado",
-        campanha: campanhaAuto?.nome || null,
-        beneficio: campanhaAuto?.brinde || null,
-        motivo: motivoSug,
-      },
-      ...pedidosSalvos,
-    ]);
-    setPedido({});
-    setSugVendedor({});
-    setCampanhaPedido(null);
+    const { data, hora } = formatarDataHora();
+    const numero = formatarNumeroPedido(pedidosSalvos.length + 1);
+    const novoPedido = {
+      id: Date.now(),
+      numero,
+      cliente: cliente.nome,
+      cidade: cliente.cidade,
+      vendedor: vendedorAtual?.nome || "",
+      data,
+      hora,
+      itens: itensPedido,
+      total: qtdTotal,
+      valorTotal: null,
+      status: STATUS.A_TRANSMITIR,
+      campanha: campanhaAuto?.nome || null,
+      beneficio: campanhaAuto?.brinde || null,
+      motivo: motivoSug,
+      observacoes: pedidoObs,
+      condicaoPagamento,
+      previsaoEntrega,
+      transmissao: null,
+      historicoTransmissao: [
+        { evento: "Pedido gerado", detalhe: "Pedido criado no aplicativo pelo vendedor.", data, hora },
+      ],
+    };
+    setPedidosSalvos([novoPedido, ...pedidosSalvos]);
+    encerrarAtendimento();
+    setAba("Pedidos");
+    setPedidoDetalheId(novoPedido.id);
   };
-  const enviarFaturamento = (id) =>
-    setPedidosSalvos(
-      pedidosSalvos.map((p) =>
-        p.id === id ? { ...p, status: "Enviado ao faturamento" } : p,
+
+  const transmitirPedido = (id) => {
+    const { data, hora } = formatarDataHora();
+    setPedidosSalvos((lista) =>
+      lista.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              status: STATUS.ENVIANDO,
+              historicoTransmissao: [
+                ...p.historicoTransmissao,
+                { evento: "Enviando para a empresa", detalhe: "Transmitindo pedido...", data, hora },
+              ],
+            }
+          : p,
       ),
     );
-  const solicitarAcao = () => setSugCampanhaAberta(true);
-  const setSugestao = () =>
-    setPedido(
-      Object.fromEntries(cliente.produtos.map((p) => [p.nome, calc(p).sug])),
-    );
-  const mixAtual = cliente.produtos.length;
-  const vendedorAtual = baseVendedores.find((v) => v.id === usuarioVendedorId);
-  const metaMixAtual = cliente.metaMixCliente || vendedorAtual?.metaMix || 1;
-  const mixPct = Math.min(100, Math.round((mixAtual / metaMixAtual) * 100));
-  const Dashboard = () => (
-    <>
-      <section className="sellerMix">
-        <div>
-          <small>META DE MIX DO CLIENTE</small>
-          <h3>{cliente.nome}</h3>
-          <p>
-            {mixAtual} de {metaMixAtual} produtos implantados · Meta de venda:{" "}
-            {cliente.metaVenda || 0} un.
-          </p>
-        </div>
-        <div className="mixScore">
-          <b>{mixPct}%</b>
-          <span>do mix atingido</span>
-        </div>
-        <div className="mixBar">
-          <i style={{ width: mixPct + "%" }} />
-        </div>
-        {mixPct < 100 && (
-          <button onClick={() => setCatalogoAberto(true)}>
-            Implantar {metaMixAtual - mixAtual}{" "}
-            {metaMixAtual - mixAtual === 1 ? "item" : "itens"} para atingir a
-            meta
-          </button>
-        )}
-      </section>
-      <section className="kpis">
-        <article>
-          <span>Clientes da rota</span>
-          <b>{clientesPermitidos.length}</b>
-          <small>carteira disponível</small>
-        </article>
-        <article>
-          <span>Meta do mês</span>
-          <b>78%</b>
-          <small>alvo +12%</small>
-        </article>
-        <article>
-          <span>Rupturas</span>
-          <b>
-            {
-              cliente.produtos.filter((p) => calc(p).status === "Ruptura")
-                .length
-            }
-          </b>
-          <small>no cliente atual</small>
-        </article>
-        <article>
-          <span>Reposição sugerida</span>
-          <b>{sugestao}</b>
-          <small>unidades</small>
-        </article>
-      </section>
-      <ClienteDetalhe />
-    </>
-  );
-  const ClienteDetalhe = () => {
-    const clienteAberto =
-      baseClientes.find((x) => x.id === clienteAbertoId) || null;
-    const statusCliente = (c) => {
-      const pct = c.metaVenda
-        ? Math.round(((c.vendaRealizada || 0) / c.metaVenda) * 100)
-        : 0;
-      if ((c.vendaRealizada || 0) === 0)
-        return { tipo: "semVenda", texto: "Sem venda" };
-      if (pct < 80) return { tipo: "abaixo", texto: "Abaixo da meta" };
-      if (c.dias >= 7)
-        return { tipo: "atrasado", texto: "Atendimento atrasado" };
-      return { tipo: "ok", texto: "Em dia" };
-    };
-    const ultimos = (c) => {
-      const mov = c.produtos.flatMap((p) =>
-        p.compras.map((h) => ({
-          data: h[0],
-          produto: p.nome,
-          estoque: h[1],
-          venda: h[2],
-        })),
+    setTimeout(() => {
+      const sucesso = Math.random() > 0.15;
+      const fim = formatarDataHora();
+      setPedidosSalvos((lista) =>
+        lista.map((p) => {
+          if (p.id !== id) return p;
+          if (sucesso) {
+            const protocolo = gerarProtocolo();
+            return {
+              ...p,
+              status: STATUS.TRANSMITIDO,
+              transmissao: {
+                data: fim.data,
+                hora: fim.hora,
+                usuario: vendedorAtual?.nome || "",
+                protocolo,
+              },
+              historicoTransmissao: [
+                ...p.historicoTransmissao,
+                {
+                  evento: "Transmitido com sucesso",
+                  detalhe: "Pedido recebido pela empresa. Protocolo: " + protocolo,
+                  data: fim.data,
+                  hora: fim.hora,
+                },
+              ],
+            };
+          }
+          return {
+            ...p,
+            status: STATUS.ERRO_TRANSMISSAO,
+            historicoTransmissao: [
+              ...p.historicoTransmissao,
+              {
+                evento: "Erro na transmissão",
+                detalhe: "Não foi possível confirmar o recebimento pela empresa.",
+                data: fim.data,
+                hora: fim.hora,
+              },
+            ],
+          };
+        }),
       );
-      return mov.slice(0, 6);
-    };
-    if (!clienteAberto)
-      return (
-        <section className="clientListOnly">
-          <div className="title">
-            <div>
-              <small>MINHA CARTEIRA</small>
-              <h2>Clientes</h2>
-              <p>
-                Selecione um cliente para ver histórico e iniciar atendimento.
-              </p>
-            </div>
-            <button className="primary" onClick={() => setCadastro(true)}>
-              + Novo cliente
-            </button>
-          </div>
-          <div className="clientSearch">
-            <input
-              placeholder="Buscar por cliente, cidade ou tipo..."
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-            />
-          </div>
-          <div className="customerDirectory">
-            {lista.map((c) => {
-              const st = statusCliente(c),
-                pct = c.metaVenda
-                  ? Math.round(((c.vendaRealizada || 0) / c.metaVenda) * 100)
-                  : 0;
-              return (
-                <button
-                  key={c.id}
-                  className={"customerLine " + st.tipo}
-                  onClick={() => {
-                    setCliente(c);
-                    setClienteAbertoId(c.id);
-                    setPedido({});
-                  }}
-                >
-                  <div className="customerAvatar">
-                    {c.nome.slice(0, 2).toUpperCase()}
-                  </div>
-                  <div className="customerName">
-                    <strong>{c.nome}</strong>
-                    <small>
-                      {c.cidade} · {c.tipoCliente || c.canal || "Sem tipo"}
-                    </small>
-                  </div>
-                  <div className="customerMeta">
-                    <span>Meta</span>
-                    <b>{pct}%</b>
-                  </div>
-                  <div className="customerVisit">
-                    <span>Último atendimento</span>
-                    <b>há {c.dias} dias</b>
-                  </div>
-                  <em>{st.texto}</em>
-                  <span className="chev">›</span>
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      );
-    const c = clienteAberto,
-      st = statusCliente(c),
-      pct = c.metaVenda
-        ? Math.round(((c.vendaRealizada || 0) / c.metaVenda) * 100)
-        : 0;
-    return (
-      <section className="clientHistoryPage">
-        <button
-          className="backClients"
-          onClick={() => {
-            setClienteAbertoId(null);
-            setVisita(false);
-          }}
-        >
-          ‹ Voltar para clientes
-        </button>
-        <div className={"clientHistoryHero " + st.tipo}>
-          <div>
-            <small>CLIENTE</small>
-            <h2>{c.nome}</h2>
-            <p>
-              {c.cidade} · {c.tipoCliente || c.canal || "Sem tipo"}
-            </p>
-          </div>
-          <div className="clientHeroActions">
-            <span>{st.texto}</span>
-            <button
-              className="primary"
-              onClick={() => {
-                setCliente(c);
-                setVisita(true);
-              }}
-            >
-              {visita ? "Atendimento iniciado" : "Iniciar atendimento"}
-            </button>
-          </div>
-        </div>
-        <div className="clientHistoryKpis">
-          <article>
-            <span>Venda / meta</span>
-            <b>
-              {c.vendaRealizada || 0} / {c.metaVenda || 0}
-            </b>
-            <small>{pct}% atingido</small>
-          </article>
-          <article>
-            <span>Mix</span>
-            <b>
-              {c.produtos.length} / {c.metaMixCliente || 0}
-            </b>
-            <small>produtos implantados</small>
-          </article>
-          <article>
-            <span>Último atendimento</span>
-            <b>{c.dias} dias</b>
-            <small>desde a última visita</small>
-          </article>
-          <article>
-            <span>Rupturas</span>
-            <b>
-              {c.produtos.filter((p) => calc(p).status === "Ruptura").length}
-            </b>
-            <small>itens sem estoque</small>
-          </article>
-        </div>
-        <div className="historyLayout">
-          <article className="historyCard">
-            <div className="goalTitle">
-              <div>
-                <small>HISTÓRICO DO CLIENTE</small>
-                <h3>Últimos 6 atendimentos / vendas</h3>
-              </div>
-              <button
-                className="historyLink"
-                onClick={() => setHistoricoCliente(c)}
-              >
-                Ver histórico completo
-              </button>
-            </div>
-            <div className="lastSix">
-              {ultimos(c).length ? (
-                ultimos(c).map((h, i) => (
-                  <div key={i}>
-                    <span className="timelineDot" />
-                    <div>
-                      <strong>{h.data}</strong>
-                      <small>{h.produto}</small>
-                    </div>
-                    <span>
-                      Estoque <b>{h.estoque}</b>
-                    </span>
-                    <span>
-                      Venda <b>{h.venda}</b>
-                    </span>
-                  </div>
-                ))
-              ) : (
-                <div className="emptyHistory">
-                  Nenhum histórico registrado para este cliente.
-                </div>
-              )}
-            </div>
-            <div className="historySummary">
-              <span>
-                <b>
-                  {historicoVisitas.filter((v) => v.cliente === c.nome).length}
-                </b>{" "}
-                visitas registradas
-              </span>
-              <span>
-                <b>{c.produtos.reduce((n, p) => n + p.compras.length, 0)}</b>{" "}
-                movimentações
-              </span>
-              <span>
-                <b>{c.produtos.length}</b> produtos acompanhados
-              </span>
-            </div>
-          </article>
-          <article className="historyCard">
-            <small>SITUAÇÃO COMERCIAL</small>
-            <h3>Meta e atendimento</h3>
-            <div className="historyProgress">
-              <div>
-                <span>Meta de venda</span>
-                <b>{pct}%</b>
-              </div>
-              <i>
-                <em style={{ width: Math.min(100, pct) + "%" }} />
-              </i>
-            </div>
-            <div className="historyNotes">
-              <span>
-                <b>
-                  {Math.max(0, (c.metaVenda || 0) - (c.vendaRealizada || 0))}
-                </b>{" "}
-                unidades para a meta
-              </span>
-              <span>
-                <b>
-                  {Math.max(0, (c.metaMixCliente || 0) - c.produtos.length)}
-                </b>{" "}
-                produtos para meta de mix
-              </span>
-              <span>
-                <b>{c.dias}</b> dias desde atendimento
-              </span>
-            </div>
-          </article>
-        </div>
-        {visita && (
-          <div className="visitWork">
-            <div className="title">
-              <div>
-                <small>ATENDIMENTO EM ANDAMENTO</small>
-                <h3>Contagem de estoque</h3>
-              </div>
-              <button
-                className="primary"
-                onClick={() => {
-                  salvarContagem();
-                  setClienteAbertoId(cliente.id);
-                }}
-              >
-                Salvar atendimento
-              </button>
-            </div>
-            <div className="products">
-              {c.produtos.map((p) => {
-                const x = calc(p);
-                return (
-                  <article className="product" key={p.nome}>
-                    <button
-                      type="button"
-                      className="productShowcaseThumb"
-                      onClick={() => abrirProduto(p)}
-                    >
-                      {produtosGestao.find((x) => x.nome === p.nome)?.imagem ? (
-                        <img
-                          className="productThumbImg"
-                          src={
-                            produtosGestao.find((x) => x.nome === p.nome).imagem
-                          }
-                          alt={p.nome}
-                        />
-                      ) : (
-                        <div className="productImagePlaceholder">
-                          <span>IMG</span>
-                        </div>
-                      )}
-                      <small>Toque para apresentar</small>
-                    </button>
-                    <div className="productHead">
-                      <div>
-                        <h3>{p.nome}</h3>
-                        <span className={"status " + x.status.toLowerCase()}>
-                          {x.status}
-                        </span>
-                      </div>
-                      <div className="numbers">
-                        <div>
-                          <small>Estoque</small>
-                          <input
-                            className="stockInput"
-                            type="number"
-                            min="0"
-                            value={contagem[p.nome] ?? p.estoque}
-                            onChange={(e) =>
-                              setContagem({
-                                ...contagem,
-                                [p.nome]: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div>
-                          <small>Média</small>
-                          <b>{x.media}</b>
-                        </div>
-                        <div>
-                          <small>Sugestão</small>
-                          <b>{x.sug}</b>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </section>
+    }, 1400);
+  };
+
+  const cancelarPedido = (id) =>
+    setPedidosSalvos((lista) =>
+      lista.map((p) => (p.id === id ? { ...p, status: STATUS.CANCELADO } : p)),
     );
+
+  const duplicarPedido = (id) => {
+    const original = pedidosSalvos.find((p) => p.id === id);
+    if (!original) return;
+    const { data, hora } = formatarDataHora();
+    const novo = {
+      ...original,
+      id: Date.now(),
+      numero: formatarNumeroPedido(pedidosSalvos.length + 1),
+      data,
+      hora,
+      status: STATUS.A_TRANSMITIR,
+      transmissao: null,
+      historicoTransmissao: [
+        { evento: "Pedido duplicado", detalhe: "Gerado a partir de " + original.numero, data, hora },
+      ],
+    };
+    setPedidosSalvos([novo, ...pedidosSalvos]);
+    setPedidoDetalheId(novo.id);
   };
   const Visitas = () => {
     const hoje = new Date().toLocaleDateString("pt-BR");
@@ -1636,159 +594,6 @@ export default function Home() {
       </section>
     );
   };
-  const Pedidos = () => (
-    <section className="panel order">
-      <div className="title">
-        <div>
-          <small>PEDIDO E NEGOCIAÇÃO</small>
-          <h2>{cliente.nome}</h2>
-          <p>
-            Compare sistema, sugestão comercial e quantidade confirmada pelo
-            comprador.
-          </p>
-        </div>
-        <button className="secondary" onClick={setSugestao}>
-          Aplicar sistema
-        </button>
-      </div>
-      <div className="campaignStrip autoCampaign">
-        <strong>Campanhas automáticas</strong>
-        <small>
-          O sistema aplica o benefício sozinho quando o pedido atingir a regra.
-        </small>
-        {campanhas
-          .filter((c) => c.status === "Ativa" && campanhaElegivel(c))
-          .map((c) => {
-            const itensAgora = cliente.produtos.map((p) => ({
-              nome: p.nome,
-              pedido: +(pedido[p.nome] || 0),
-            }));
-            const ok =
-              c.regraTipo === "Quantidade total"
-                ? qtdPedido >= c.minimo
-                : c.regraTipo === "Produto específico"
-                  ? (itensAgora.find((i) => i.nome === c.produto)?.pedido ||
-                      0) >= c.minimo
-                  : c.regraTipo === "Mix de produtos"
-                    ? itensAgora.filter((i) => i.pedido > 0).length >=
-                      c.mixMinimo
-                    : qtdPedido >= c.minimo &&
-                      itensAgora.filter((i) => i.pedido > 0).length >=
-                        c.mixMinimo;
-            return (
-              <span
-                className={ok ? "campaignHit" : "campaignPending"}
-                key={c.id}
-              >
-                {c.nome}:{" "}
-                {c.regraTipo === "Produto específico"
-                  ? c.minimo + " " + c.produto
-                  : c.regraTipo === "Mix de produtos"
-                    ? c.mixMinimo + " produtos"
-                    : c.regraTipo === "Quantidade + mix"
-                      ? c.minimo + " un. + " + c.mixMinimo + " produtos"
-                      : c.minimo + " un."}{" "}
-                → {c.brinde} {ok ? "✓ Campanha atingida" : ""}
-              </span>
-            );
-          })}
-      </div>
-      {cliente.produtos.map((p) => {
-        const x = calc(p);
-        return (
-          <div className="orderRow orderAdvanced" key={p.nome}>
-            <div>
-              <strong>{p.nome}</strong>
-              <small>
-                Estoque {p.estoque} · média {x.media}
-              </small>
-            </div>
-            <label>
-              <span>Sistema</span>
-              <b>{x.sug}</b>
-            </label>
-            <label>
-              <span>Vendedor</span>
-              <input
-                type="number"
-                min="0"
-                value={sugVendedor[p.nome] ?? x.sug}
-                onChange={(e) =>
-                  setSugVendedor({ ...sugVendedor, [p.nome]: e.target.value })
-                }
-              />
-            </label>
-            <label>
-              <span>Pedido</span>
-              <input
-                type="number"
-                min="0"
-                value={pedido[p.nome] ?? ""}
-                placeholder={sugVendedor[p.nome] ?? x.sug}
-                onChange={(e) =>
-                  setPedido({ ...pedido, [p.nome]: e.target.value })
-                }
-              />
-            </label>
-          </div>
-        );
-      })}
-      <div className="sellerReason">
-        <label>
-          Motivo da sugestão do vendedor
-          <select
-            value={motivoSug}
-            onChange={(e) => setMotivoSug(e.target.value)}
-          >
-            <option>Promoção</option>
-            <option>Lançamento</option>
-            <option>Aumento de mix</option>
-            <option>Ponto extra</option>
-            <option>Negociação especial</option>
-            <option>Outro</option>
-          </select>
-        </label>
-        <button className="secondary" onClick={solicitarAcao}>
-          Sugerir campanha especial ao gestor
-        </button>
-      </div>
-      <div className="orderTotal">
-        <span>Total confirmado</span>
-        <b>{qtdPedido} unidades</b>
-        <button disabled={!qtdPedido} onClick={confirmarPedido}>
-          Preparar pedido
-        </button>
-      </div>
-      {pedidosSalvos.length > 0 && (
-        <div className="savedOrders">
-          <h3>Pedidos preparados</h3>
-          {pedidosSalvos.map((p) => (
-            <article key={p.id}>
-              <div>
-                <strong>
-                  {p.numero} · {p.cliente}
-                </strong>
-                <small>
-                  {p.data} · {p.itens.length} itens{" "}
-                  {p.campanha ? "· " + p.campanha : ""}
-                </small>
-              </div>
-              <b>{p.total} un.</b>
-              <span>{p.status}</span>
-              {p.status === "Preparado" && (
-                <button
-                  className="billingBtn"
-                  onClick={() => enviarFaturamento(p.id)}
-                >
-                  Enviar faturamento
-                </button>
-              )}
-            </article>
-          ))}
-        </div>
-      )}
-    </section>
-  );
   const Gestor = () => {
     const [vendSel, setVendSel] = useState(baseVendedores[0] || null);
     const [territorio, setTerritorio] = useState("Todos");
@@ -4161,7 +2966,7 @@ export default function Home() {
             className={perfil === "vendedor" ? "on" : ""}
             onClick={() => {
               setPerfil("vendedor");
-              setAba("Visão geral");
+              setAba("Início");
               const c = baseClientes.find(
                 (x) => x.vendedorId === usuarioVendedorId,
               );
@@ -4190,29 +2995,196 @@ export default function Home() {
           </button>
         </div>
       </header>
-      {aba === "Visão geral" && <Dashboard />}
-      {aba === "Clientes" && <ClienteDetalhe />}
-      {aba === "Visitas" && <Visitas />}
-      {aba === "Pedidos" && <Pedidos />}
-      {aba === "Metas" && <Metas />}
+      {perfil === "vendedor" && aba === "Início" && (
+        <SellerHome
+          vendedorNome={vendedorAtual?.nome || ""}
+          clientesCarteira={clientesPermitidos.length}
+          visitasMes={visitasMes}
+          vendasMes={vendasMes}
+          visitaAtiva={visita}
+          clienteEmAtendimento={cliente?.nome}
+          pedidosAbertos={
+            pedidosSalvos.filter((p) =>
+              [STATUS.A_TRANSMITIR, STATUS.ENVIANDO, STATUS.ERRO_TRANSMISSAO].includes(
+                p.status,
+              ),
+            ).length
+          }
+          onIniciarAtendimento={() => setAba(visita ? "Atendimento" : "Clientes")}
+          onNavigate={(destino) => setAba(destino)}
+        />
+      )}
+      {perfil === "vendedor" &&
+        aba === "Clientes" &&
+        (clienteAbertoId ? (
+          <StartVisit
+            cliente={baseClientes.find((x) => x.id === clienteAbertoId)}
+            historicoVisitas={historicoVisitas}
+            visitaAtiva={visita}
+            onVoltar={() => setClienteAbertoId(null)}
+            onIniciarAtendimento={() => {
+              const c = baseClientes.find((x) => x.id === clienteAbertoId);
+              iniciarAtendimento(c);
+              setAba("Atendimento");
+            }}
+            onVerHistoricoCompleto={() =>
+              setHistoricoCliente(baseClientes.find((x) => x.id === clienteAbertoId))
+            }
+            onAbrirCatalogo={() => setCatalogoAberto(true)}
+          />
+        ) : (
+          <ClientList
+            lista={lista}
+            busca={busca}
+            onBuscaChange={setBusca}
+            onSelecionar={(c) => {
+              setCliente(c);
+              setClienteAbertoId(c.id);
+            }}
+            onNovoCliente={() => setCadastro(true)}
+          />
+        ))}
+      {perfil === "vendedor" && aba === "Atendimento" && visita && etapaAtendimento === 1 && (
+        <StockCount
+          cliente={cliente}
+          produtosGestao={produtosGestao}
+          contagem={contagem}
+          onContagemChange={(nome, valor) =>
+            setContagem((prev) => ({ ...prev, [nome]: valor }))
+          }
+          onApresentar={abrirProduto}
+          onVoltar={() => setAba("Clientes")}
+          onProximo={() => setEtapaAtendimento(2)}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Atendimento" && visita && etapaAtendimento === 2 && (
+        <OrderSuggestion
+          cliente={cliente}
+          contagem={contagem}
+          produtosGestao={produtosGestao}
+          pedido={pedido}
+          onPedidoChange={(nome, valor) =>
+            setPedido((prev) => ({ ...prev, [nome]: valor }))
+          }
+          onSeedPedido={(mapa) => setPedido((prev) => ({ ...prev, ...mapa }))}
+          onApresentar={abrirProduto}
+          onVoltar={() => setEtapaAtendimento(1)}
+          onProximo={() => setEtapaAtendimento(3)}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Atendimento" && visita && etapaAtendimento === 3 && (
+        <OrderReview
+          cliente={cliente}
+          pedido={pedido}
+          onPedidoChange={(nome, valor) =>
+            setPedido((prev) => ({ ...prev, [nome]: valor }))
+          }
+          onRemover={(nome) => setPedido((prev) => ({ ...prev, [nome]: 0 }))}
+          onAdicionarProduto={() => setCatalogoAberto(true)}
+          campanhas={campanhas}
+          campanhaElegivel={campanhaElegivel}
+          motivoSug={motivoSug}
+          onMotivoChange={setMotivoSug}
+          onSugerirCampanhaEspecial={solicitarAcao}
+          observacoes={pedidoObs}
+          onObservacoesChange={setPedidoObs}
+          condicaoPagamento={condicaoPagamento}
+          onCondicaoChange={setCondicaoPagamento}
+          previsaoEntrega={previsaoEntrega}
+          onPrevisaoChange={setPrevisaoEntrega}
+          onVoltar={() => setEtapaAtendimento(2)}
+          onFinalizar={() => setEtapaAtendimento(4)}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Atendimento" && visita && etapaAtendimento === 4 && (
+        <FinalizeVisit
+          cliente={cliente}
+          pedido={pedido}
+          observacoes={pedidoObs}
+          condicaoPagamento={condicaoPagamento}
+          previsaoEntrega={previsaoEntrega}
+          onVoltar={() => setEtapaAtendimento(3)}
+          onFinalizarGerarPedido={finalizarAtendimento}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Pedidos" && pedidoCopiaId && (
+        <CustomerOrderCopy
+          pedido={pedidosSalvos.find((p) => p.id === pedidoCopiaId)}
+          vendedorNome={vendedorAtual?.nome || ""}
+          onVoltar={() => setPedidoCopiaId(null)}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Pedidos" && !pedidoCopiaId && pedidoDetalheId && (
+        <OrderDetail
+          pedido={pedidosSalvos.find((p) => p.id === pedidoDetalheId)}
+          onVoltar={() => setPedidoDetalheId(null)}
+          onTransmitir={() => transmitirPedido(pedidoDetalheId)}
+          onEnviarCopia={() => setPedidoCopiaId(pedidoDetalheId)}
+          onGerarPDF={() => window.print()}
+          onCompartilhar={() => {
+            const p = pedidosSalvos.find((x) => x.id === pedidoDetalheId);
+            if (navigator.share)
+              navigator.share({ title: p.numero, text: p.numero + " - " + p.cliente });
+          }}
+          onDuplicar={() => duplicarPedido(pedidoDetalheId)}
+          onCancelar={() => cancelarPedido(pedidoDetalheId)}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Pedidos" && !pedidoCopiaId && !pedidoDetalheId && (
+        <Orders
+          pedidos={pedidosSalvos}
+          filtro={filtroPedidoStatus}
+          onFiltroChange={setFiltroPedidoStatus}
+          busca={buscaPedido}
+          onBuscaChange={setBuscaPedido}
+          periodo={periodoPedido}
+          onPeriodoChange={setPeriodoPedido}
+          onAbrirDetalhe={(id) => setPedidoDetalheId(id)}
+          onNovoAtendimento={() => setAba(visita ? "Atendimento" : "Clientes")}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Produtos" && (
+        <ProductCatalog
+          produtosGestao={produtosGestao}
+          cliente={cliente}
+          busca={buscaProduto}
+          onBuscaChange={setBuscaProduto}
+          onApresentar={abrirProduto}
+          onImplantar={implantarProduto}
+          onRemover={removerProduto}
+        />
+      )}
+      {perfil === "vendedor" && aba === "Mais" && (
+        <MoreMenu onAbrir={(destino) => setAba(destino)} />
+      )}
+      {perfil === "vendedor" && aba === "Visitas" && <Visitas />}
+      {perfil === "vendedor" && aba === "Metas" && <Metas />}
       {aba === "Gestão" && perfil === "gestor" && <Gestor />}
       {aba === "Diretoria" && perfil === "diretoria" && <Diretoria />}
-      <nav>
-        {(perfil === "diretoria"
-          ? ["Diretoria"]
-          : perfil === "gestor"
-            ? ["Visão geral", "Visitas", "Pedidos", "Metas", "Gestão"]
-            : ["Visão geral", "Visitas", "Pedidos", "Metas"]
-        ).map((n) => (
-          <button
-            key={n}
-            className={aba === n ? "sel" : ""}
-            onClick={() => setAba(n)}
-          >
-            {n}
-          </button>
-        ))}
-      </nav>
+      {perfil === "vendedor" ? (
+        <BottomNavigation
+          active={["Início", "Clientes", "Pedidos", "Produtos", "Mais"].includes(aba) ? aba : "Início"}
+          onChange={(n) => {
+            setPedidoDetalheId(null);
+            setPedidoCopiaId(null);
+            setAba(n);
+          }}
+        />
+      ) : (
+        <nav>
+          {(perfil === "diretoria" ? ["Diretoria"] : ["Visitas", "Metas", "Gestão"]).map(
+            (n) => (
+              <button
+                key={n}
+                className={aba === n ? "sel" : ""}
+                onClick={() => setAba(n)}
+              >
+                {n}
+              </button>
+            ),
+          )}
+        </nav>
+      )}
     </main>
   );
 }
