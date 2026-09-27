@@ -4076,25 +4076,6 @@ nav button.sel {
   }
 }
 
-/* Navegacao inferior */
-.bottomNav {
-  gap: 2px;
-}
-.bottomNav button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  font-size: 11px;
-  padding: 8px 10px;
-  border-radius: 14px;
-  min-width: 58px;
-}
-.navIcon {
-  width: 22px;
-  height: 22px;
-}
-
 /* Stepper das 4 etapas do atendimento */
 .visitStepper {
   display: grid;
@@ -4579,7 +4560,7 @@ nav button.sel {
 }
 @media print {
   header,
-  .bottomNav,
+  nav,
   .backClients,
   .receiptActions {
     display: none !important;
@@ -4673,4 +4654,31 @@ nav button.sel {
     text-overflow: ellipsis;
   }
   .austenBrandText p { display: none; }
+}
+
+/* Cabecalho clicavel (logo/titulo volta para a tela inicial) */
+.austenBrandHome {
+  background: none;
+  border: 0;
+  padding: 4px;
+  margin: -4px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+}
+.austenBrandHome:hover {
+  background: rgba(22, 134, 232, 0.06);
+}
+.austenBrandHome:active {
+  transform: scale(0.99);
+}
+
+/* Efeito geral de interacao nos botoes */
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(20, 35, 48, 0.1);
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.6;
 }
