@@ -15,6 +15,7 @@ export default function OrderSuggestion({
   onPedidoChange,
   onSeedPedido,
   onApresentar,
+  onAdicionarProduto,
   onVoltar,
   onProximo,
 }) {
@@ -76,6 +77,9 @@ export default function OrderSuggestion({
           <h2>Sugestão de Pedido</h2>
           <p>Revise as sugestões e ajuste as quantidades.</p>
         </div>
+        <button className="secondary" onClick={onAdicionarProduto}>
+          + Adicionar produto
+        </button>
       </div>
       <VisitStepper etapa={2} />
       <div className="chipRow">
@@ -113,6 +117,9 @@ export default function OrderSuggestion({
               <div>
                 <h3>{p.nome}</h3>
                 <StatusBadge status={info.status} kind="estoque" />
+                {p.novo && (
+                  <span className="newProductTag">✨ Produto novo no cliente</span>
+                )}
               </div>
               <div className="numbers">
                 <div>

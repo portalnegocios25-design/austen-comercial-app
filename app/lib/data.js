@@ -774,7 +774,9 @@ const descricaoProduto = (p) =>
         ? "Gel superabsorvente em toda a extensão e núcleo que distribui os líquidos, ajudando a manter a pele seca."
         : "";
 const calc = (p) => {
-  const media = p.compras.reduce((s, x) => s + x[2], 0) / p.compras.length;
+  const media = p.compras.length
+    ? p.compras.reduce((s, x) => s + x[2], 0) / p.compras.length
+    : 0;
   const sug = Math.max(0, Math.ceil(media * 1.15 - p.estoque));
   return {
     media: Math.round(media),
@@ -782,7 +784,7 @@ const calc = (p) => {
     status:
       p.estoque === 0
         ? "Ruptura"
-        : p.estoque / media < 0.35
+        : media && p.estoque / media < 0.35
           ? "Atenção"
           : "Normal",
   };

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import austenLogo from "../lib/logo";
 
 const montarResumoTexto = (pedido, vendedorNome) => {
   const linhas = pedido.itens.map(
@@ -64,7 +65,10 @@ export default function CustomerOrderCopy({ pedido, vendedorNome, onVoltar }) {
       </button>
       <div className="customerReceipt">
         <div className="receiptHead">
-          <strong>AUSTEN COMERCIAL</strong>
+          <div className="receiptBrand">
+            <img className="receiptLogo" src={austenLogo} alt="Austen" />
+            <strong>AUSTEN COMERCIAL</strong>
+          </div>
           <span>PEDIDO Nº {pedido.numero}</span>
         </div>
         <div className="receiptMeta">

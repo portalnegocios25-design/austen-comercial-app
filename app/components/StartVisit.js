@@ -24,15 +24,11 @@ export default function StartVisit({
   onVoltar,
   onIniciarAtendimento,
   onVerHistoricoCompleto,
-  onAbrirCatalogo,
 }) {
   const st = statusCliente(c);
   const pct = c.metaVenda
     ? Math.round(((c.vendaRealizada || 0) / c.metaVenda) * 100)
     : 0;
-  const metaMix = c.metaMixCliente || 1;
-  const mixAtual = c.produtos.length;
-  const mixPct = Math.min(100, Math.round((mixAtual / metaMix) * 100));
   return (
     <section className="clientHistoryPage">
       <button className="backClients" onClick={onVoltar}>
@@ -54,29 +50,6 @@ export default function StartVisit({
           </button>
         </div>
       </div>
-      <section className="sellerMix">
-        <div>
-          <small>META DE MIX DO CLIENTE</small>
-          <h3>{c.nome}</h3>
-          <p>
-            {mixAtual} de {metaMix} produtos implantados · Meta de venda:{" "}
-            {c.metaVenda || 0} un.
-          </p>
-        </div>
-        <div className="mixScore">
-          <b>{mixPct}%</b>
-          <span>do mix atingido</span>
-        </div>
-        <div className="mixBar">
-          <i style={{ width: mixPct + "%" }} />
-        </div>
-        {mixPct < 100 && (
-          <button onClick={onAbrirCatalogo}>
-            Implantar {metaMix - mixAtual} {metaMix - mixAtual === 1 ? "item" : "itens"}{" "}
-            para atingir a meta
-          </button>
-        )}
-      </section>
       <div className="clientHistoryKpis">
         <article>
           <span>Venda / meta</span>

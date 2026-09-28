@@ -61,6 +61,9 @@ export default function OrderReview({
           <div className="orderRow orderAdvanced" key={p.nome}>
             <div>
               <strong>{p.nome}</strong>
+              {p.novo && (
+                <span className="newProductTag">✨ Produto novo no cliente</span>
+              )}
               <small>Preço unitário: —</small>
             </div>
             <QuantityInput

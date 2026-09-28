@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   catalogo,
   vendedores,
@@ -17,6 +17,8 @@ import {
   formatarNumeroPedido,
   formatarDataHora,
 } from "./lib/orderStatus";
+import austenLogo from "./lib/logo";
+import { dataDeHoje } from "./lib/date";
 import SellerHome from "./components/SellerHome";
 import ClientList from "./components/ClientList";
 import StartVisit from "./components/StartVisit";
@@ -28,7 +30,94 @@ import Orders from "./components/Orders";
 import OrderDetail from "./components/OrderDetail";
 import CustomerOrderCopy from "./components/CustomerOrderCopy";
 import ProductCatalog from "./components/ProductCatalog";
+import AddProductModal from "./components/AddProductModal";
 import MoreMenu from "./components/MoreMenu";
+
+function IconCalendarG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <rect x="3" y="4" width="18" height="18" rx="2" />
+      <path d="M16 2v4" />
+      <path d="M8 2v4" />
+      <path d="M3 10h18" />
+    </svg>
+  );
+}
+function IconBellG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </svg>
+  );
+}
+function IconUsersTeam(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+function IconCartG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <circle cx="9" cy="21" r="1" />
+      <circle cx="19" cy="21" r="1" />
+      <path d="M2.5 3h2l2.8 12.4a2 2 0 0 0 2 1.6h8.4a2 2 0 0 0 2-1.6L21.5 8H6" />
+    </svg>
+  );
+}
+function IconBoxG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="m21 8-9-5-9 5 9 5 9-5Z" />
+      <path d="M3 8v8l9 5 9-5V8" />
+      <path d="M12 13v8" />
+    </svg>
+  );
+}
+function IconAlertG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M12 9v4" />
+      <path d="M10.3 3.6 1.9 18a2 2 0 0 0 1.7 3h16.8a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z" />
+      <path d="M12 17h.01" />
+    </svg>
+  );
+}
+function IconStoreG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M3 9v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9" />
+      <path d="M21 9 18.5 4h-13L3 9" />
+      <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0" />
+      <path d="M9 21v-6h6v6" />
+    </svg>
+  );
+}
+function IconTargetG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" />
+    </svg>
+  );
+}
+function IconReportG(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M3 21h18" />
+      <rect x="6" y="12" width="3" height="9" rx="0.5" />
+      <rect x="11" y="7" width="3" height="14" rx="0.5" />
+      <rect x="16" y="3" width="3" height="18" rx="0.5" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const [aba, setAba] = useState("Início"),
     [baseClientes, setBaseClientes] = useState(clientes),
@@ -41,6 +130,7 @@ export default function Home() {
     [contagem, setContagem] = useState({}),
     [historicoVisitas, setHistoricoVisitas] = useState([]),
     [catalogoAberto, setCatalogoAberto] = useState(false),
+    [painelFoco, setPainelFoco] = useState(null),
     [produtosGestao, setProdutosGestao] = useState(
       catalogo.map((p, i) => ({
         ...p,
@@ -117,6 +207,12 @@ export default function Home() {
     (s, c) => s + (c.vendaRealizada || 0),
     0,
   );
+  const clientesAtencao = clientesPermitidos.filter((c) => {
+    const pct = c.metaVenda
+      ? Math.round(((c.vendaRealizada || 0) / c.metaVenda) * 100)
+      : 0;
+    return (c.vendaRealizada || 0) === 0 || pct < 80 || c.dias >= 7;
+  }).length;
   const salvarCliente = (e) => {
     e.preventDefault();
     if (!novo.nome || !novo.cidade) return;
@@ -159,7 +255,13 @@ export default function Home() {
   };
   const implantarProduto = (prod) => {
     if (cliente.produtos.some((p) => p.nome === prod.nome)) return;
-    const novoProd = { nome: prod.nome, estoque: 0, venda: 0, compras: [] };
+    const novoProd = {
+      nome: prod.nome,
+      estoque: 0,
+      venda: 0,
+      compras: [],
+      novo: true,
+    };
     const atualizado = {
       ...cliente,
       produtos: [...cliente.produtos, novoProd],
@@ -168,6 +270,19 @@ export default function Home() {
     setBaseClientes(
       baseClientes.map((c) => (c.id === cliente.id ? atualizado : c)),
     );
+  };
+  const contarEstoqueProduto = (prod) => {
+    implantarProduto(prod);
+  };
+  const adicionarProdutoAoPedido = (prod) => {
+    implantarProduto(prod);
+    setContagem((prev) =>
+      prev[prod.nome] !== undefined ? prev : { ...prev, [prod.nome]: 0 },
+    );
+    setPedido((prev) => ({
+      ...prev,
+      [prod.nome]: +prev[prod.nome] > 0 ? prev[prod.nome] : 1,
+    }));
   };
   const removerProduto = (nome) => {
     const atualizado = {
@@ -231,6 +346,7 @@ export default function Home() {
         return {
           ...p,
           estoque: +contagem[p.nome],
+          novo: false,
           compras: [
             [agora, +contagem[p.nome], qtdPedidoItem > 0 ? qtdPedidoItem : p.venda],
             ...p.compras,
@@ -601,64 +717,430 @@ export default function Home() {
         n + c.produtos.filter((p) => calc(p).status === "Ruptura").length,
       0,
     );
-    const totalMix = baseClientes.reduce((n, c) => n + c.produtos.length, 0);
+    const itensVendidos = pedidosSalvos.reduce(
+      (s, p) => s + p.itens.reduce((si, i) => si + (i.pedido || 0), 0),
+      0,
+    );
+    const statusBuckets = [
+      {
+        chave: "transmitido",
+        label: "Transmitidos",
+        cor: "#1f7745",
+        grupo: [STATUS.TRANSMITIDO, STATUS.RECEBIDO, STATUS.FATURADO],
+      },
+      {
+        chave: "andamento",
+        label: "Em andamento",
+        cor: "#e5a51a",
+        grupo: [STATUS.A_TRANSMITIR, STATUS.ENVIANDO, STATUS.RASCUNHO],
+      },
+      {
+        chave: "erro",
+        label: "Com erro",
+        cor: "#d84b43",
+        grupo: [STATUS.ERRO_TRANSMISSAO],
+      },
+      {
+        chave: "cancelado",
+        label: "Cancelados",
+        cor: "#8a959c",
+        grupo: [STATUS.CANCELADO],
+      },
+    ].map((b) => ({
+      ...b,
+      n: pedidosSalvos.filter((p) => b.grupo.includes(p.status)).length,
+    }));
+    const totalPedidosStatus = statusBuckets.reduce((s, b) => s + b.n, 0);
+    const raioDonut = 46;
+    const circDonut = 2 * Math.PI * raioDonut;
+    let acumuladoDonut = 0;
+    const segmentosDonut = statusBuckets
+      .filter((b) => b.n > 0)
+      .map((b) => {
+        const comprimento = (b.n / totalPedidosStatus) * circDonut;
+        const seg = { ...b, comprimento, offset: acumuladoDonut };
+        acumuladoDonut += comprimento;
+        return seg;
+      });
+
+    const tiposCliente = [
+      "Supermercado",
+      "Farmácia",
+      "Distribuidor",
+      "Loja especializada",
+    ].map((t) => ({
+      tipo: t,
+      n: baseClientes.filter((c) => (c.tipoCliente || c.canal) === t).length,
+    }));
+    const maxTipoCliente = Math.max(1, ...tiposCliente.map((t) => t.n));
+    const mediaMetaEquipe = baseVendedores.length
+      ? Math.round(
+          baseVendedores.reduce((s, v) => s + (v.realizado || 0), 0) /
+            baseVendedores.length,
+        )
+      : 0;
+    const campanhasAtivasQtd = campanhas.filter(
+      (c) => c.status === "Ativa",
+    ).length;
+    const pedidosEmAndamentoQtd = pedidosSalvos.filter((p) =>
+      [STATUS.A_TRANSMITIR, STATUS.ENVIANDO, STATUS.RASCUNHO].includes(
+        p.status,
+      ),
+    ).length;
+    const irParaPainel = (id) => {
+      setPainelFoco(id);
+      setAba("GestãoPaineis");
+    };
+
     return (
       <section className="manager">
-        <div className="managerHero">
+        <div className="managerHead">
           <div>
             <small>VISÃO GERENCIAL</small>
             <h2>Equipe comercial</h2>
             <p>Metas, cobertura, mix, clientes e ruptura em uma única visão.</p>
           </div>
-          <div className="managerHeroActions">
-            <button onClick={() => setNovoVendedor(true)}>
+          <div className="managerHeadRight">
+            <div className="sellerDateChip">
+              <IconCalendarG className="sellerDateIcon" />
+              <span>{dataDeHoje()}</span>
+            </div>
+            <button
+              className="sellerBell"
+              aria-label={
+                totalRupturas > 0
+                  ? `${totalRupturas} rupturas precisam de atenção`
+                  : "Nenhum alerta no momento"
+              }
+            >
+              <IconBellG />
+              {totalRupturas > 0 && (
+                <span className="sellerBellBadge">{totalRupturas}</span>
+              )}
+            </button>
+            <span className="managerAvatar" title="Gestor Comercial">
+              G
+            </span>
+            <button
+              className="primary"
+              onClick={() => setNovoVendedor(true)}
+            >
               + Novo vendedor
             </button>
-            <span>GESTOR</span>
           </div>
         </div>
-        <div className="kpis managerKpis">
-          <article>
-            <span>Vendedores</span>
-            <b>{vendedores.length}</b>
-            <small>equipe demonstrativa</small>
+        <div className="managerKpiGrid">
+          <article className="managerKpiCard blue">
+            <span className="managerKpiIcon">
+              <IconUsersTeam />
+            </span>
+            <b>{baseVendedores.length}</b>
+            <span>Vendedores na equipe</span>
           </article>
-          <article>
-            <span>Clientes ativos</span>
-            <b>{baseClientes.length}</b>
-            <small>carteira carregada</small>
+          <article className="managerKpiCard green">
+            <span className="managerKpiIcon">
+              <IconCartG />
+            </span>
+            <b>{pedidosSalvos.length}</b>
+            <span>Pedidos registrados</span>
           </article>
-          <article>
-            <span>Rupturas abertas</span>
+          <article className="managerKpiCard purple">
+            <span className="managerKpiIcon">
+              <IconBoxG />
+            </span>
+            <b>{itensVendidos}</b>
+            <span>Itens vendidos</span>
+          </article>
+          <article className="managerKpiCard pink">
+            <span className="managerKpiIcon">
+              <IconAlertG />
+            </span>
             <b>{totalRupturas}</b>
-            <small>exigem ação</small>
-          </article>
-          <article>
-            <span>Itens implantados</span>
-            <b>{totalMix}</b>
-            <small>mix nos clientes</small>
+            <span>Rupturas em aberto</span>
           </article>
         </div>
-        <div className="managerTypes">
-          <strong>Clientes por tipo</strong>
-          {[
-            "Supermercado",
-            "Farmácia",
-            "Distribuidor",
-            "Loja especializada",
-          ].map((t) => {
-            const n = baseClientes.filter(
-              (c) => (c.tipoCliente || c.canal) === t,
-            ).length;
-            return (
-              <span key={t}>
-                {t}
-                <b>{n}</b>
+        <div className="managerNavGrid">
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-vendedores")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon blue">
+                <IconUsersTeam />
               </span>
-            );
-          })}
+              <div>
+                <strong>Vendedores</strong>
+                <span>Equipe, carteira e desempenho</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat blue">
+              <IconUsersTeam />
+              <b>{baseVendedores.length}</b>
+              <span>{baseVendedores.length === 1 ? "vendedor" : "vendedores"}</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-clientes")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon green">
+                <IconStoreG />
+              </span>
+              <div>
+                <strong>Clientes</strong>
+                <span>Clientes, visitas e histórico</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat green">
+              <IconStoreG />
+              <b>{baseClientes.length}</b>
+              <span>na carteira</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-pedidos")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon orange">
+                <IconCartG />
+              </span>
+              <div>
+                <strong>Pedidos</strong>
+                <span>Pedidos, status e transmissão</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat orange">
+              <IconCartG />
+              <b>{pedidosSalvos.length}</b>
+              <span>{pedidosEmAndamentoQtd} em andamento</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-produtos")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon purple">
+                <IconBoxG />
+              </span>
+              <div>
+                <strong>Produtos</strong>
+                <span>Catálogo e produtos ativos</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat purple">
+              <IconBoxG />
+              <b>{produtosGestao.length}</b>
+              <span>no catálogo</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => setAba("Metas")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon pink">
+                <IconTargetG />
+              </span>
+              <div>
+                <strong>Metas</strong>
+                <span>Metas por vendedor e equipe</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat pink">
+              <IconTargetG />
+              <b>{mediaMetaEquipe}%</b>
+              <span>média da equipe</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-pedidos")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon slate">
+                <IconReportG />
+              </span>
+              <div>
+                <strong>Relatórios</strong>
+                <span>Vendas, cobertura e resultados</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat slate">
+              <IconReportG />
+              <span>Ver relatórios</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-campanhas")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon green">
+                <IconCartG />
+              </span>
+              <div>
+                <strong>Campanhas</strong>
+                <span>Ações comerciais e materiais</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat green">
+              <IconCartG />
+              <b>{campanhasAtivasQtd}</b>
+              <span>{campanhasAtivasQtd === 1 ? "ativa" : "ativas"}</span>
+            </div>
+          </button>
+          <button className="managerNavCard" onClick={() => irParaPainel("painel-territorios")}>
+            <div className="managerNavTop">
+              <span className="managerNavIcon blue">
+                <IconTargetG />
+              </span>
+              <div>
+                <strong>Territórios</strong>
+                <span>Regiões, rotas e cobertura</span>
+              </div>
+              <span className="chev">›</span>
+            </div>
+            <div className="managerNavStat blue">
+              <IconTargetG />
+              <b>{territorios.length}</b>
+              <span>regiões</span>
+            </div>
+          </button>
         </div>
-        <div className="managerGrid">
+      </section>
+    );
+  };
+  const GestorPaineis = () => {
+    const [vendSel, setVendSel] = useState(baseVendedores[0] || null);
+    const [territorio, setTerritorio] = useState("Todos");
+    const totalRupturas = baseClientes.reduce(
+      (n, c) =>
+        n + c.produtos.filter((p) => calc(p).status === "Ruptura").length,
+      0,
+    );
+    const statusBuckets = [
+      {
+        chave: "transmitido",
+        label: "Transmitidos",
+        cor: "#1f7745",
+        grupo: [STATUS.TRANSMITIDO, STATUS.RECEBIDO, STATUS.FATURADO],
+      },
+      {
+        chave: "andamento",
+        label: "Em andamento",
+        cor: "#e5a51a",
+        grupo: [STATUS.A_TRANSMITIR, STATUS.ENVIANDO, STATUS.RASCUNHO],
+      },
+      {
+        chave: "erro",
+        label: "Com erro",
+        cor: "#d84b43",
+        grupo: [STATUS.ERRO_TRANSMISSAO],
+      },
+      {
+        chave: "cancelado",
+        label: "Cancelados",
+        cor: "#8a959c",
+        grupo: [STATUS.CANCELADO],
+      },
+    ].map((b) => ({
+      ...b,
+      n: pedidosSalvos.filter((p) => b.grupo.includes(p.status)).length,
+    }));
+    const totalPedidosStatus = statusBuckets.reduce((s, b) => s + b.n, 0);
+    const raioDonut = 46;
+    const circDonut = 2 * Math.PI * raioDonut;
+    let acumuladoDonut = 0;
+    const segmentosDonut = statusBuckets
+      .filter((b) => b.n > 0)
+      .map((b) => {
+        const comprimento = (b.n / totalPedidosStatus) * circDonut;
+        const seg = { ...b, comprimento, offset: acumuladoDonut };
+        acumuladoDonut += comprimento;
+        return seg;
+      });
+    const tiposCliente = [
+      "Supermercado",
+      "Farmácia",
+      "Distribuidor",
+      "Loja especializada",
+    ].map((t) => ({
+      tipo: t,
+      n: baseClientes.filter((c) => (c.tipoCliente || c.canal) === t).length,
+    }));
+    const maxTipoCliente = Math.max(1, ...tiposCliente.map((t) => t.n));
+
+    useEffect(() => {
+      if (painelFoco) {
+        document
+          .getElementById(painelFoco)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setPainelFoco(null);
+      }
+    }, [painelFoco]);
+
+    return (
+      <section className="manager">
+        <button className="backClients" onClick={() => setAba("Gestão")}>
+          ‹ Voltar para o painel
+        </button>
+        <div className="managerChartsRow" id="painel-pedidos">
+          <div className="panel managerChartPanel">
+            <h3>Pedidos por status</h3>
+            {totalPedidosStatus === 0 ? (
+              <div className="empty">Nenhum pedido registrado ainda.</div>
+            ) : (
+              <div className="donutWrap">
+                <svg viewBox="0 0 120 120" className="donutChart">
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r={raioDonut}
+                    fill="none"
+                    stroke="#e6eaed"
+                    strokeWidth="16"
+                  />
+                  {segmentosDonut.map((s) => (
+                    <circle
+                      key={s.chave}
+                      cx="60"
+                      cy="60"
+                      r={raioDonut}
+                      fill="none"
+                      stroke={s.cor}
+                      strokeWidth="16"
+                      strokeDasharray={`${s.comprimento} ${circDonut - s.comprimento}`}
+                      strokeDashoffset={-s.offset}
+                      transform="rotate(-90 60 60)"
+                    />
+                  ))}
+                  <text x="60" y="57" textAnchor="middle" className="donutTotal">
+                    {totalPedidosStatus}
+                  </text>
+                  <text x="60" y="73" textAnchor="middle" className="donutLabel">
+                    pedidos
+                  </text>
+                </svg>
+                <div className="donutLegend">
+                  {statusBuckets.map((b) => (
+                    <span key={b.chave}>
+                      <i style={{ background: b.cor }} />
+                      {b.label}
+                      <b>{b.n}</b>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="panel managerChartPanel">
+            <h3>Clientes por tipo</h3>
+            <div className="barChartList">
+              {tiposCliente.map((t) => (
+                <div className="barChartRow" key={t.tipo}>
+                  <span className="barChartLabel">{t.tipo}</span>
+                  <div className="barChartTrack">
+                    <div
+                      className="barChartFill"
+                      style={{ width: (t.n / maxTipoCliente) * 100 + "%" }}
+                    />
+                  </div>
+                  <b className="barChartValue">{t.n}</b>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="managerGrid" id="painel-vendedores">
           <section className="panel">
             <h3>Desempenho por vendedor</h3>
             {baseVendedores.map((v) => (
@@ -742,7 +1224,7 @@ export default function Home() {
             )}
           </section>
         </div>
-        <div className="panel productManager">
+        <div className="panel productManager" id="painel-produtos">
           <div className="title">
             <div>
               <small>CATÁLOGO COMERCIAL</small>
@@ -839,7 +1321,7 @@ export default function Home() {
             </>
           )}
         </div>
-        <div className="panel campaignManager">
+        <div className="panel campaignManager" id="painel-campanhas">
           <div className="title">
             <div>
               <small>CAMPANHAS E AUTORIZAÇÕES</small>
@@ -1039,7 +1521,7 @@ export default function Home() {
             </div>
           )}
         </div>
-        <div className="panel territory">
+        <div className="panel territory" id="painel-territorios">
           <div className="title">
             <div>
               <small>TERRITÓRIO COMERCIAL</small>
@@ -1080,7 +1562,7 @@ export default function Home() {
               ))}
           </div>
         </div>
-        <div className="panel">
+        <div className="panel" id="painel-clientes">
           <h3>Clientes que exigem atenção</h3>
           {baseClientes.map((c) => {
             const r = c.produtos.filter(
@@ -2787,83 +3269,17 @@ export default function Home() {
         </div>
       )}
       {catalogoAberto && (
-        <div className="modalBack">
-          <div className="modal catalogModal">
-            <div className="title">
-              <div>
-                <small>CATÁLOGO AUSTEN</small>
-                <h2>Implantar novo produto</h2>
-                <p>
-                  O vendedor tem acesso ao cadastro completo e pode ampliar o
-                  mix deste cliente.
-                </p>
-              </div>
-              <button
-                className="close"
-                onClick={() => setCatalogoAberto(false)}
-              >
-                ×
-              </button>
-            </div>
-            <input
-              className="catalogSearch"
-              placeholder="Buscar produto, marca ou linha..."
-              value={buscaProduto}
-              onChange={(e) => setBuscaProduto(e.target.value)}
-            />
-            <div className="catalogList">
-              {produtosGestao
-                .filter(
-                  (p) =>
-                    p.ativo &&
-                    (p.nome + " " + p.marca + " " + p.linha)
-                      .toLowerCase()
-                      .includes(buscaProduto.toLowerCase()),
-                )
-                .map((p) => {
-                  const ativo = cliente.produtos.some((x) => x.nome === p.nome);
-                  return (
-                    <article key={p.nome}>
-                      <button
-                        type="button"
-                        className="catalogProductView"
-                        onClick={() => abrirProduto(p)}
-                      >
-                        {p.imagem ? (
-                          <img src={p.imagem} alt={p.nome} />
-                        ) : (
-                          <span>IMG</span>
-                        )}
-                      </button>
-                      <div>
-                        <strong>{p.nome}</strong>
-                        <small>
-                          {p.marca} · {p.familia || p.linha}{" "}
-                          {p.tamanho ? "· " + p.tamanho : ""}{" "}
-                          {p.unidades ? "· " + p.unidades + " un." : ""}
-                        </small>
-                      </div>
-                      {ativo ? (
-                        <div className="catalogActions">
-                          <span>Já no mix</span>
-                          <button onClick={() => removerProduto(p.nome)}>
-                            Remover
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          className="primary"
-                          onClick={() => implantarProduto(p)}
-                        >
-                          + Implantar
-                        </button>
-                      )}
-                    </article>
-                  );
-                })}
-            </div>
-          </div>
-        </div>
+        <AddProductModal
+          produtosGestao={produtosGestao}
+          cliente={cliente}
+          busca={buscaProduto}
+          onBuscaChange={setBuscaProduto}
+          onApresentar={abrirProduto}
+          onContarEstoque={contarEstoqueProduto}
+          onAdicionarPedido={adicionarProdutoAoPedido}
+          onRemover={removerProduto}
+          onFechar={() => setCatalogoAberto(false)}
+        />
       )}
       {cadastro && (
         <div className="modalBack">
@@ -2971,11 +3387,7 @@ export default function Home() {
             );
           }}
         >
-          <img
-            className="austenLogo"
-            src="data:image/webp;base64,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"
-            alt="Austen"
-          />
+          <img className="austenLogo" src={austenLogo} alt="Austen" />
           <div className="austenBrandText">
             <small>AUSTEN · GRUPO EUROFRAL</small>
             <h1>Austen Comercial</h1>
@@ -3031,6 +3443,7 @@ export default function Home() {
               ),
             ).length
           }
+          alertas={clientesAtencao}
           onIniciarAtendimento={() => setAba(visita ? "Atendimento" : "Clientes")}
           onNavigate={(destino) => setAba(destino)}
         />
@@ -3051,16 +3464,20 @@ export default function Home() {
             onVerHistoricoCompleto={() =>
               setHistoricoCliente(baseClientes.find((x) => x.id === clienteAbertoId))
             }
-            onAbrirCatalogo={() => setCatalogoAberto(true)}
           />
         ) : (
           <ClientList
             lista={lista}
             busca={busca}
             onBuscaChange={setBusca}
+            onVoltar={() => setAba("Início")}
             onSelecionar={(c) => {
               setCliente(c);
               setClienteAbertoId(c.id);
+            }}
+            onIniciarRapido={(c) => {
+              iniciarAtendimento(c);
+              setAba("Atendimento");
             }}
             onNovoCliente={() => setCadastro(true)}
           />
@@ -3074,6 +3491,7 @@ export default function Home() {
             setContagem((prev) => ({ ...prev, [nome]: valor }))
           }
           onApresentar={abrirProduto}
+          onAdicionarProduto={() => setCatalogoAberto(true)}
           onVoltar={() => setAba("Clientes")}
           onProximo={() => setEtapaAtendimento(2)}
         />
@@ -3089,6 +3507,7 @@ export default function Home() {
           }
           onSeedPedido={(mapa) => setPedido((prev) => ({ ...prev, ...mapa }))}
           onApresentar={abrirProduto}
+          onAdicionarProduto={() => setCatalogoAberto(true)}
           onVoltar={() => setEtapaAtendimento(1)}
           onProximo={() => setEtapaAtendimento(3)}
         />
@@ -3181,6 +3600,7 @@ export default function Home() {
       {perfil === "vendedor" && aba === "Visitas" && <Visitas />}
       {perfil === "vendedor" && aba === "Metas" && <Metas />}
       {aba === "Gestão" && perfil === "gestor" && <Gestor />}
+      {aba === "GestãoPaineis" && perfil === "gestor" && <GestorPaineis />}
       {aba === "Diretoria" && perfil === "diretoria" && <Diretoria />}
       {perfil !== "vendedor" && (
         <nav>
